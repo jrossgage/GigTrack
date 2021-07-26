@@ -15,55 +15,54 @@ namespace GigTrack.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class GigController : ControllerBase
+    public class ClientController : ControllerBase
     {
-        private readonly IGigRepository _gigRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly IUserProfileRepository _userProfileRepository;
 
-        public GigController(IGigRepository gigRepository, IUserProfileRepository userProfileRepository)
+        public ClientController(IClientRepository clientRepository, IUserProfileRepository userProfileRepository)
         {
-            _gigRepository = gigRepository;
+            _clientRepository = clientRepository;
             _userProfileRepository = userProfileRepository;
         }
-
-        // GET: api/<GigController>
+        // GET: api/<ValuesController>
         [HttpGet]
-        public IActionResult GetGigsByUser()
+        public IActionResult GetClientsByUser()
         {
             string currentUserProfileId = GetCurrentFirebaseUserProfileId();
-            var gigs = (_gigRepository.GetAllGigsByFirebaseId(currentUserProfileId));
-            if (gigs == null)
+            var clients = (_clientRepository.GetAllClientsByFirebaseId(currentUserProfileId));
+            if (clients == null)
             {
                 return NotFound();
             }
 
-            return Ok(gigs);
+            return Ok(clients);
         }
 
-        // GET api/<GigController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
+        // GET api/<ValuesController>/5
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
 
-        //// POST api/<GigController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        // POST api/<ValuesController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
 
-        //// PUT api/<GigController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // PUT api/<ValuesController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
 
-        //// DELETE api/<GigController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<ValuesController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
 
         private string GetCurrentFirebaseUserProfileId()
         {
