@@ -41,9 +41,15 @@ namespace GigTrack.Controllers
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult GetById(int id)
         {
-            return "value";
+            string currentUserProfileId = GetCurrentFirebaseUserProfileId();
+            var client = _clientRepository.GetClientById(id, currentUserProfileId);
+            if (client == null)
+            {
+                return NotFound();
+            }
+            return Ok(client);
         }
 
         // POST api/<ValuesController>

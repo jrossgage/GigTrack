@@ -32,6 +32,7 @@ namespace GigTrack
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<IGigRepository, GigRepository>();
             services.AddTransient<IClientRepository, ClientRepository>();
+            services.AddTransient<IExpenseRepository, ExpenseRepository>();
 
             var firebaseProjectId = Configuration.GetValue<string>("FirebaseProjectId");
             var googleTokenUrl = $"https://securetoken.google.com/{firebaseProjectId}";

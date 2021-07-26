@@ -57,6 +57,39 @@ namespace GigTrack.Repositories
             }
         }
 
+        public Client GetClientById(int id, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                         SELECT 
+                              c.id AS ClientId, c.companyName, c.phoneNumber, c.email, c.userId,
+                              u.id, u.[name], u.[email], u.firebaseUserId
+                         FROM Client c
+                              LEFT JOIN Gig g ON g.clientId = c.id
+                              LEFT JOIN UserProfile u ON u.id = c.userId
+                        WHERE firebaseUserId = @firebaseUserId AND ClientId = @id";
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    Client client = null;
+
+                    if (reader.Read())
+                    {
+                        client = NewClientFromReader(reader);
+                    }
+
+                    reader.Close();
+
+                    return client;
+                }
+            }
+        }
+
         private ClientViewModel NewClientVMFromReader(SqlDataReader reader)
         {
             return new ClientViewModel()
