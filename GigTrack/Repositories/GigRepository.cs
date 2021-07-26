@@ -49,6 +49,42 @@ namespace GigTrack.Repositories
             }
         }
 
+        public Gig GetGigById(int id, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT g.id, g.pay, g.[Date], 
+                              g.mileage,
+                              g.clientId, g.venueName, g.locationId,
+                              g.userId, g.notes, 
+                              l.id, l.city, l.[state], l.userId,
+                              u.id, u.[name], u.[email], u.firebaseUserId
+                         FROM Gig g
+                              LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN UserProfile u on g.userId = u.id
+                        WHERE firebaseUserId = @firebaseUserId AND g.id = @id";
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@id", id);
+                    var reader = cmd.ExecuteReader();
+
+                    Gig gig = null;
+
+                    if (reader.Read())
+                    {
+                        gig = NewGigFromReader(reader);
+                    }
+
+                    reader.Close();
+
+                    return gig;
+                }
+            }
+        }
+
         private Gig NewGigFromReader(SqlDataReader reader)
         {
             return new Gig()

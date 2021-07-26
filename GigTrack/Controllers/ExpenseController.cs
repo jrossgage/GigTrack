@@ -15,60 +15,59 @@ namespace GigTrack.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class GigController : ControllerBase
+    public class ExpenseController : ControllerBase
     {
-        private readonly IGigRepository _gigRepository;
+        private readonly IExpenseRepository _expenseRepository;
         private readonly IUserProfileRepository _userProfileRepository;
 
-        public GigController(IGigRepository gigRepository, IUserProfileRepository userProfileRepository)
+        public ExpenseController(IExpenseRepository expenseRepository, IUserProfileRepository userProfileRepository)
         {
-            _gigRepository = gigRepository;
+            _expenseRepository = expenseRepository;
             _userProfileRepository = userProfileRepository;
         }
-
-        // GET: api/<GigController>
+        // GET: api/<ExpenseController>
         [HttpGet]
-        public IActionResult GetGigsByUser()
+        public IActionResult GetExpensesByUser()
         {
             string currentUserProfileId = GetCurrentFirebaseUserProfileId();
-            var gigs = (_gigRepository.GetAllGigsByFirebaseId(currentUserProfileId));
-            if (gigs == null)
+            var expenses = (_expenseRepository.GetAllExpensesByFirebaseId(currentUserProfileId));
+            if (expenses == null)
             {
                 return NotFound();
             }
-
-            return Ok(gigs);
+            return Ok(expenses);
         }
 
-        //GET api/<GigController>/5
+        // GET api/<ExpenseController>/5
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
             string currentUserProfileId = GetCurrentFirebaseUserProfileId();
-            var gig = _gigRepository.GetGigById(id, currentUserProfileId);
-            if (gig == null)
+            var expense = _expenseRepository.GetExpenseById(id, currentUserProfileId);
+            if (expense == null)
             {
                 return NotFound();
             }
-            return Ok(gig);
+            return Ok(expense);
         }
-        //// POST api/<GigController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
 
-        //// PUT api/<GigController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        // POST api/<ExpenseController>
+        [HttpPost]
+        public void Post([FromBody] string value)
+        {
+        }
 
-        //// DELETE api/<GigController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // PUT api/<ExpenseController>/5
+        [HttpPut("{id}")]
+        public void Put(int id, [FromBody] string value)
+        {
+        }
+
+        // DELETE api/<ExpenseController>/5
+        [HttpDelete("{id}")]
+        public void Delete(int id)
+        {
+        }
 
         private string GetCurrentFirebaseUserProfileId()
         {
