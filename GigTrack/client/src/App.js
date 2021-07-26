@@ -3,6 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Spinner } from 'reactstrap';
 import ApplicationViews from "./components/ApplicationViews";
 import { onLoginStatusChange } from './modules/authManager';
+import Header from './components/Header';
 import logo from './logo.svg';
 import './App.css';
 
@@ -20,7 +21,7 @@ function App() {
 
   return (
     <Router>
-      {/* <Header isLoggedIn={isLoggedIn}/> */}
+      <Header isLoggedIn={isLoggedIn} />
       <ApplicationViews isLoggedIn={isLoggedIn} />
     </Router>
   );

@@ -56,7 +56,7 @@ namespace GigTrack.Repositories
                                         OUTPUT INSERTED.ID
                                         VALUES (@FirebaseUserId, @Name, @Email)";
                     DbUtils.AddParameter(cmd, "@FirebaseUserId", userProfile.FirebaseUserId);
-                    DbUtils.AddParameter(cmd, "@FirstName", userProfile.Name);
+                    DbUtils.AddParameter(cmd, "@Name", userProfile.Name);
                     DbUtils.AddParameter(cmd, "@Email", userProfile.Email);
 
                     userProfile.Id = (int)cmd.ExecuteScalar();
