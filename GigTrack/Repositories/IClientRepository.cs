@@ -8,5 +8,8 @@ namespace GigTrack.Repositories
         List<ClientViewModel> GetAllClientsByFirebaseId(string firebaseUserId);
 
         Client GetClientById(int id, string firebaseUserId);
+
+        void Add(Client client);
+        void Delete(int id);
     }
 }

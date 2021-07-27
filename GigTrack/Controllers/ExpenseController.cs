@@ -53,8 +53,13 @@ namespace GigTrack.Controllers
 
         // POST api/<ExpenseController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post(Expense expense)
         {
+            var currentUserProfile = GetCurrentUserProfile();
+            expense.UserId = currentUserProfile.Id;
+
+            _expenseRepository.Add(expense);
+            return CreatedAtAction(nameof(GetExpensesByUser), new { id = expense.Id }, expense);
         }
 
         // PUT api/<ExpenseController>/5
@@ -65,9 +70,12 @@ namespace GigTrack.Controllers
 
         // DELETE api/<ExpenseController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            _expenseRepository.Delete(id);
+            return NoContent();
         }
+
 
         private string GetCurrentFirebaseUserProfileId()
         {

@@ -77,6 +77,50 @@ namespace GigTrack.Repositories
             }
         }
 
+        public void Add(Expense expense)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Expense (
+                            [Name], Cost, Date, UserId)
+                        OUTPUT INSERTED.ID
+                        VALUES (
+                            @Name, @Cost, @Date, @UserId)";
+                    DbUtils.AddParameter(cmd, "@Name", expense.Name);
+                    DbUtils.AddParameter(cmd, "@Cost", expense.Cost);
+                    DbUtils.AddParameter(cmd, "@Date", expense.Date);
+                    DbUtils.AddParameter(cmd, "@UserId", expense.UserId);
+
+                    expense.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM Expense
+                            WHERE Id = @id
+                        ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
+
         private Expense NewExpenseFromReader(SqlDataReader reader)
         {
             return new Expense()
