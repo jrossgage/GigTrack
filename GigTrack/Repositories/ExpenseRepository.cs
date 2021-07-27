@@ -149,6 +149,40 @@ namespace GigTrack.Repositories
             }
         }
 
+        public List<Expense> Search(string criterion, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                    SELECT e.id AS ExpenseId, e.[name] AS ExpenseName, e.cost, 
+                    e.date, e.userId,
+                    u.id as UserId, u.[name], u.email, u.firebaseUserId
+                    From Expense e
+                    LEFT JOIN UserProfile u ON e.userId = u.id
+                    WHERE firebaseUserId = @firebaseUserId AND e.[name] LIKE @Criterion
+                    ORDER BY e.[date] DESC";
+
+                    DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    var reader = cmd.ExecuteReader();
+
+                    var expenses = new List<Expense>();
+
+                    while (reader.Read())
+                    {
+                        expenses.Add(NewExpenseFromReader(reader));
+                    }
+
+                    reader.Close();
+
+                    return expenses;
+                }
+            }
+        }
+
 
         private Expense NewExpenseFromReader(SqlDataReader reader)
         {
