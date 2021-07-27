@@ -64,8 +64,15 @@ namespace GigTrack.Controllers
 
         // PUT api/<ExpenseController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Expense expense)
         {
+
+            if (id != expense.Id)
+            {
+                return BadRequest();
+            }
+            _expenseRepository.UpdateExpense(expense);
+            return NoContent();
         }
 
         // DELETE api/<ExpenseController>/5

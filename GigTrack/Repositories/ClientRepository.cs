@@ -134,6 +134,36 @@ namespace GigTrack.Repositories
             }
         }
 
+        public void UpdateClient(Client client)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Client 
+                            SET
+                                
+                                
+                                CompanyName = @CompanyName,
+                                PhoneNumber = @PhoneNumber,
+                                Email = @Email,
+                                UserId = @UserId
+                                WHERE Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@Id", client.Id);
+                    DbUtils.AddParameter(cmd, "@CompanyName", client.CompanyName);
+                    DbUtils.AddParameter(cmd, "@PhoneNumber", client.PhoneNumber);
+                    DbUtils.AddParameter(cmd, "@Email", client.Email);
+                    DbUtils.AddParameter(cmd, "@UserId", client.UserId);
+                   
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private ClientViewModel NewClientVMFromReader(SqlDataReader reader)
         {
             return new ClientViewModel()

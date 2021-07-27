@@ -65,8 +65,15 @@ namespace GigTrack.Controllers
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, Client client)
         {
+
+            if (id != client.Id)
+            {
+                return BadRequest();
+            }
+            _clientRepository.UpdateClient(client);
+            return NoContent();
         }
 
         // DELETE api/<ValuesController>/5

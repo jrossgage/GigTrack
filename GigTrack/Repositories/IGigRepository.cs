@@ -11,5 +11,6 @@ namespace GigTrack.Repositories
 
         void Add(Gig gig);
         void Delete(int id);
+        void UpdateGig(Gig gig);
     }
 }
