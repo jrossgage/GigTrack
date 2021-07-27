@@ -84,6 +84,20 @@ namespace GigTrack.Controllers
             return NoContent();
         }
 
+
+        [HttpGet("search")]
+        public IActionResult Search(string q)
+        {
+            string currentUserProfileId = GetCurrentFirebaseUserProfileId();
+            var clients = _clientRepository.Search(q, currentUserProfileId);
+            if (clients == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(clients);
+        }
+
         private string GetCurrentFirebaseUserProfileId()
         {
             string id = User.FindFirstValue(ClaimTypes.NameIdentifier);

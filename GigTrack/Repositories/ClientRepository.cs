@@ -164,6 +164,51 @@ namespace GigTrack.Repositories
             }
         }
 
+        public List<ClientViewModel> Search(string criterion, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                              SELECT 
+                              c.id AS ClientId, c.companyName, c.phoneNumber, c.email, c.userId,
+                              g.id, g.pay, 
+                              u.id, u.[name], u.[email], u.firebaseUserId
+                         FROM Client c
+                              LEFT JOIN Gig g ON g.clientId = c.id
+                              LEFT JOIN UserProfile u ON u.id = c.userId
+                        WHERE firebaseUserId = @firebaseUserId AND c.companyName LIKE @Criterion
+                         ORDER BY c.companyName DESC";
+
+                    DbUtils.AddParameter(cmd, "@Criterion", $"%{criterion}%");
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    var reader = cmd.ExecuteReader();
+
+                    var clients = new List<ClientViewModel>();
+                    while (reader.Read())
+                    {
+                        var clientId = DbUtils.GetInt(reader, "ClientId");
+                        var existingClient = clients.FirstOrDefault(c => c.Id == clientId);
+                        if (existingClient == null)
+                        {
+                            existingClient = NewClientVMFromReader(reader);
+                            clients.Add(existingClient);
+                        };
+                        if (DbUtils.IsNotDbNull(reader, "pay"))
+                        {
+                            existingClient.GigPay.Add(DbUtils.GetInt(reader, "pay"));
+                        }
+                    }
+
+                    reader.Close();
+
+                    return clients;
+                }
+            }
+        }
+
         private ClientViewModel NewClientVMFromReader(SqlDataReader reader)
         {
             return new ClientViewModel()

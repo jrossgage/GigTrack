@@ -6,9 +6,15 @@ namespace GigTrack.Repositories
     public interface IExpenseRepository
     {
         List<Expense> GetAllExpensesByFirebaseId(string firebaseUserId);
+
         Expense GetExpenseById(int id, string firebaseUserId);
+
         void Add(Expense expense);
+
         void Delete(int id);
+
         void UpdateExpense(Expense expense);
+
+        List<Expense> Search(string criterion, string firebaseUserId);
     }
 }

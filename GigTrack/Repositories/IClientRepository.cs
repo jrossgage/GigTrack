@@ -10,7 +10,11 @@ namespace GigTrack.Repositories
         Client GetClientById(int id, string firebaseUserId);
 
         void Add(Client client);
+
         void Delete(int id);
+
         void UpdateClient(Client client);
+
+        List<ClientViewModel> Search(string criterion, string firebaseUserId);
     }
 }
