@@ -85,6 +85,57 @@ namespace GigTrack.Repositories
             }
         }
 
+        public void Add(Gig gig)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Gig (
+                            Pay, Date, Mileage, ClientId, VenueName,
+                            LocationId, Notes, UserId)
+                        OUTPUT INSERTED.ID
+                        VALUES (
+                            @Pay, @Date, @Mileage, @ClientId, @VenueName,
+                            @LocationId, @Notes, @UserId)";
+                    DbUtils.AddParameter(cmd, "@Pay", gig.Pay);
+                    DbUtils.AddParameter(cmd, "@Date", gig.Date);
+                    DbUtils.AddParameter(cmd, "@Mileage", gig.Mileage);
+                    DbUtils.AddParameter(cmd, "@ClientId", gig.ClientId);
+                    DbUtils.AddParameter(cmd, "@VenueName", gig.VenueName);
+                    DbUtils.AddParameter(cmd, "@LocationId", gig.LocationId);
+                    DbUtils.AddParameter(cmd, "@Notes", gig.Notes);
+                    DbUtils.AddParameter(cmd, "@UserId", gig.UserId);
+
+
+                    gig.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM Gig
+                            WHERE Id = @id
+                        ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Gig NewGigFromReader(SqlDataReader reader)
         {
             return new Gig()

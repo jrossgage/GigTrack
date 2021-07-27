@@ -46,8 +46,10 @@ namespace GigTrack.Repositories
                             existingClient = NewClientVMFromReader(reader);
                             clients.Add(existingClient);
                         };
-                        existingClient.GigPay.Add(DbUtils.GetInt(reader, "pay"));
-
+                        if (DbUtils.IsNotDbNull(reader, "pay"))
+                        {
+                            existingClient.GigPay.Add(DbUtils.GetInt(reader, "pay"));
+                        }
                     }
 
                     reader.Close();
@@ -66,12 +68,11 @@ namespace GigTrack.Repositories
                 {
                     cmd.CommandText = @"
                          SELECT 
-                              c.id AS ClientId, c.companyName, c.phoneNumber, c.email, c.userId,
+                              c.id AS ClientId, c.companyName, c.phoneNumber, c.email as ClientEmail, c.userId,
                               u.id, u.[name], u.[email], u.firebaseUserId
                          FROM Client c
-                              LEFT JOIN Gig g ON g.clientId = c.id
                               LEFT JOIN UserProfile u ON u.id = c.userId
-                        WHERE firebaseUserId = @firebaseUserId AND ClientId = @id";
+                        WHERE firebaseUserId = @firebaseUserId AND c.id = @id";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
                     DbUtils.AddParameter(cmd, "@id", id);
                     var reader = cmd.ExecuteReader();
@@ -90,11 +91,54 @@ namespace GigTrack.Repositories
             }
         }
 
+        public void Add(Client client)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        INSERT INTO Client (
+                            CompanyName, PhoneNumber, Email, UserId)
+                        OUTPUT INSERTED.ID
+                        VALUES (
+                            @CompanyName, @PhoneNumber, @Email, @UserId)";
+                    DbUtils.AddParameter(cmd, "@CompanyName", client.CompanyName);
+                    DbUtils.AddParameter(cmd, "@PhoneNumber", client.PhoneNumber);
+                    DbUtils.AddParameter(cmd, "@Email", client.Email);
+                    DbUtils.AddParameter(cmd, "@UserId", client.UserId);
+
+                    client.Id = (int)cmd.ExecuteScalar();
+                }
+            }
+        }
+        public void Delete(int id)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                            DELETE FROM Client
+                            WHERE Id = @id
+                        ";
+
+                    DbUtils.AddParameter(cmd, "@id", id);
+
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private ClientViewModel NewClientVMFromReader(SqlDataReader reader)
         {
             return new ClientViewModel()
             {
-                Id = DbUtils.GetInt(reader, "id"),
+                Id = DbUtils.GetInt(reader, "ClientId"),
                 CompanyName = DbUtils.GetString(reader, "companyName"),
                 PhoneNumber = DbUtils.GetInt(reader, "phoneNumber"),
                 Email = DbUtils.GetString(reader, "email"),
@@ -106,10 +150,10 @@ namespace GigTrack.Repositories
         {
             return new Client()
             {
-                Id = DbUtils.GetInt(reader, "id"),
+                Id = DbUtils.GetInt(reader, "ClientId"),
                 CompanyName = DbUtils.GetString(reader, "companyName"),
                 PhoneNumber = DbUtils.GetInt(reader, "phoneNumber"),
-                Email = DbUtils.GetString(reader, "email"),
+                Email = DbUtils.GetString(reader, "ClientEmail"),
                 UserId = DbUtils.GetInt(reader, "userId"),
 
             };

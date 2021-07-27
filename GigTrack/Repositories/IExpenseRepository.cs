@@ -7,5 +7,7 @@ namespace GigTrack.Repositories
     {
         List<Expense> GetAllExpensesByFirebaseId(string firebaseUserId);
         Expense GetExpenseById(int id, string firebaseUserId);
+        void Add(Expense expense);
+        void Delete(int id);
     }
 }

@@ -8,5 +8,8 @@ namespace GigTrack.Repositories
         List<Gig> GetAllGigsByFirebaseId(string firebaseUserId);
 
         Gig GetGigById(int id, string firebaseUserId);
+
+        void Add(Gig gig);
+        void Delete(int id);
     }
 }

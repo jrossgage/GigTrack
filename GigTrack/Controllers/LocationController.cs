@@ -15,67 +15,63 @@ namespace GigTrack.Controllers
     [Authorize]
     [Route("api/[controller]")]
     [ApiController]
-    public class ClientController : ControllerBase
+    public class LocationController : ControllerBase
     {
-        private readonly IClientRepository _clientRepository;
+
+        private readonly ILocationRepository _locationRepository;
         private readonly IUserProfileRepository _userProfileRepository;
 
-        public ClientController(IClientRepository clientRepository, IUserProfileRepository userProfileRepository)
+        public LocationController(ILocationRepository locationRepository, IUserProfileRepository userProfileRepository)
         {
-            _clientRepository = clientRepository;
+            _locationRepository = locationRepository;
             _userProfileRepository = userProfileRepository;
         }
-        // GET: api/<ValuesController>
+
+        // GET: api/<LocationController>
         [HttpGet]
-        public IActionResult GetClientsByUser()
+        public IActionResult GetLocationsByUser()
         {
             string currentUserProfileId = GetCurrentFirebaseUserProfileId();
-            var clients = (_clientRepository.GetAllClientsByFirebaseId(currentUserProfileId));
-            if (clients == null)
+            var locations = (_locationRepository.GetAllLocationsByFirebaseId(currentUserProfileId));
+            if (locations == null)
             {
                 return NotFound();
             }
-
-            return Ok(clients);
+            return Ok(locations);
         }
 
-        // GET api/<ValuesController>/5
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            string currentUserProfileId = GetCurrentFirebaseUserProfileId();
-            var client = _clientRepository.GetClientById(id, currentUserProfileId);
-            if (client == null)
-            {
-                return NotFound();
-            }
-            return Ok(client);
-        }
+        // GET api/<LocationController>/5
+        //[HttpGet("{id}")]
+        //public string Get(int id)
+        //{
+        //    return "value";
+        //}
 
-        // POST api/<ValuesController>
+        // POST api/<LocationController>
         [HttpPost]
-        public IActionResult Post(Client client)
+        public IActionResult Post(Location location)
         {
             var currentUserProfile = GetCurrentUserProfile();
-            client.UserId = currentUserProfile.Id;
+            location.UserId = currentUserProfile.Id;
 
-            _clientRepository.Add(client);
-            return CreatedAtAction(nameof(GetClientsByUser), new { id = client.Id }, client);
+            _locationRepository.Add(location);
+            return CreatedAtAction(nameof(GetLocationsByUser), new { id = location.Id }, location);
         }
 
-        // PUT api/<ValuesController>/5
+        // PUT api/<LocationController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ValuesController>/5
+        // DELETE api/<LocationController>/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _clientRepository.Delete(id);
+            _locationRepository.Delete(id);
             return NoContent();
         }
+
 
         private string GetCurrentFirebaseUserProfileId()
         {

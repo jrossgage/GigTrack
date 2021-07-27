@@ -52,11 +52,17 @@ namespace GigTrack.Controllers
             }
             return Ok(gig);
         }
+
         //// POST api/<GigController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
+        [HttpPost]
+        public IActionResult Post(Gig gig)
+        {
+            var currentUserProfile = GetCurrentUserProfile();
+            gig.UserId = currentUserProfile.Id;
+
+            _gigRepository.Add(gig);
+            return CreatedAtAction(nameof(GetGigsByUser), new { id = gig.Id }, gig);
+        }
 
         //// PUT api/<GigController>/5
         //[HttpPut("{id}")]
@@ -64,11 +70,13 @@ namespace GigTrack.Controllers
         //{
         //}
 
-        //// DELETE api/<GigController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        // DELETE api/<GigController>/5
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            _gigRepository.Delete(id);
+            return NoContent();
+        }
 
         private string GetCurrentFirebaseUserProfileId()
         {
