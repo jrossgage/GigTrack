@@ -136,6 +136,42 @@ namespace GigTrack.Repositories
             }
         }
 
+        public void UpdateGig(Gig gig)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE Gig 
+                            SET
+                                
+                                Pay = @Pay,
+                                Date = @Date,
+                                Mileage = @Mileage,
+                                ClientId = @ClientId,
+                                VenueName = @VenueName,
+                                LocationId = @LocationId,
+                                Notes = @Notes,
+                                UserId = @UserId
+                                WHERE Id = @id";
+
+                    DbUtils.AddParameter(cmd, "@Pay", gig.Pay);
+                    DbUtils.AddParameter(cmd, "@Date", gig.Date);
+                    DbUtils.AddParameter(cmd, "@Mileage", gig.Mileage);
+                    DbUtils.AddParameter(cmd, "@ClientId", gig.ClientId);
+                    DbUtils.AddParameter(cmd, "@VenueName", gig.VenueName);
+                    DbUtils.AddParameter(cmd, "@LocationId", gig.LocationId);
+                    DbUtils.AddParameter(cmd, "@Notes", gig.Notes);
+                    DbUtils.AddParameter(cmd, "@UserId", gig.UserId);
+                    DbUtils.AddParameter(cmd, "@Id", gig.Id);
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
         private Gig NewGigFromReader(SqlDataReader reader)
         {
             return new Gig()

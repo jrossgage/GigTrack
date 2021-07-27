@@ -11,5 +11,6 @@ namespace GigTrack.Repositories
 
         void Add(Client client);
         void Delete(int id);
+        void UpdateClient(Client client);
     }
 }

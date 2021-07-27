@@ -65,10 +65,17 @@ namespace GigTrack.Controllers
         }
 
         //// PUT api/<GigController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, Gig gig)
+        {
+
+            if (id != gig.Id)
+            {
+                return BadRequest();
+            }
+            _gigRepository.UpdateGig(gig);
+            return NoContent();
+        }
 
         // DELETE api/<GigController>/5
         [HttpDelete("{id}")]
