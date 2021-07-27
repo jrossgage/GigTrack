@@ -172,6 +172,124 @@ namespace GigTrack.Repositories
             }
         }
 
+        public List<Gig> FilterAllGigsByLocationId(int locationId, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT g.id, g.pay, g.[Date], 
+                              g.mileage,
+                              g.clientId, g.venueName, g.locationId,
+                              g.userId, g.notes, 
+                              l.id, l.city, l.[state], l.userId,
+                              u.id, u.[name], u.[email], u.firebaseUserId
+                         FROM Gig g
+                              LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN UserProfile u on g.userId = u.id
+                        WHERE firebaseUserId = @firebaseUserId AND l.id = @locationId
+                         ORDER BY g.[date] DESC";
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@locationId", locationId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var gigs = new List<Gig>();
+
+                    while (reader.Read())
+                    {
+                        gigs.Add(NewGigFromReader(reader));
+                    }
+
+                    reader.Close();
+
+                    return gigs;
+                }
+            }
+        }
+
+        public List<Gig> FilterAllGigsByClientId(int clientId, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT g.id, g.pay, g.[Date], 
+                              g.mileage,
+                              g.clientId, g.venueName, g.locationId,
+                              g.userId, g.notes, 
+                              l.id, l.city, l.[state], l.userId,
+                              c.id, c.companyName, c.phoneNumber, c.email, c.userId,
+                              u.id, u.[name], u.[email], u.firebaseUserId
+                         FROM Gig g
+                              LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN Client c ON g.clientId = c.id
+                              LEFT JOIN UserProfile u on g.userId = u.id
+                        WHERE firebaseUserId = @firebaseUserId AND c.id = @clientId
+                         ORDER BY g.[date] DESC";
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@clientId", clientId);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var gigs = new List<Gig>();
+
+                    while (reader.Read())
+                    {
+                        gigs.Add(NewGigFromReader(reader));
+                    }
+
+                    reader.Close();
+
+                    return gigs;
+                }
+            }
+        }
+
+        public List<Gig> FilterAllGigsByVenue(string venue, string firebaseUserId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                       SELECT g.id, g.pay, g.[Date], 
+                              g.mileage,
+                              g.clientId, g.venueName, g.locationId,
+                              g.userId, g.notes, 
+                              l.id, l.city, l.[state], l.userId,
+                              c.id, c.companyName, c.phoneNumber, c.email, c.userId,
+                              u.id, u.[name], u.[email], u.firebaseUserId
+                         FROM Gig g
+                              LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN Client c ON g.clientId = c.id
+                              LEFT JOIN UserProfile u on g.userId = u.id
+                        WHERE firebaseUserId = @firebaseUserId AND g.VenueName = @venue
+                         ORDER BY g.[date] DESC";
+                    DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
+                    DbUtils.AddParameter(cmd, "@venue", venue);
+
+                    var reader = cmd.ExecuteReader();
+
+                    var gigs = new List<Gig>();
+
+                    while (reader.Read())
+                    {
+                        gigs.Add(NewGigFromReader(reader));
+                    }
+
+                    reader.Close();
+
+                    return gigs;
+                }
+            }
+        }
+
         private Gig NewGigFromReader(SqlDataReader reader)
         {
             return new Gig()
