@@ -52,6 +52,49 @@ namespace GigTrack.Controllers
             }
             return Ok(gig);
         }
+        
+        //---Filter Functions---
+        //Filter Gigs by Location
+        [HttpGet("filterByLocation/{id}")]
+        public IActionResult GetAllByLocationId(int id)
+        {
+            string currentUserProfileId = GetCurrentFirebaseUserProfileId();
+            var gig = _gigRepository.FilterAllGigsByLocationId(id, currentUserProfileId);
+            if (gig == null)
+            {
+                return NotFound();
+            }
+            return Ok(gig);
+        }
+
+        //Filter Gigs By Client
+        [HttpGet("filterByClient/{id}")]
+        public IActionResult GetAllByClientId(int id)
+        {
+            string currentUserProfileId = GetCurrentFirebaseUserProfileId();
+            var gig = _gigRepository.FilterAllGigsByClientId(id, currentUserProfileId);
+            if (gig == null)
+            {
+                return NotFound();
+            }
+            return Ok(gig);
+        }
+
+
+        //Filter Gigs By Venue Name
+        //Syntax /filterByVenueName?venue=
+        [HttpGet("filterByVenueName")]
+        public IActionResult GetGigsByVenue(string venue)
+        {
+            string currentUserProfileId = GetCurrentFirebaseUserProfileId();
+            var gig = _gigRepository.FilterAllGigsByVenue(venue, currentUserProfileId);
+            if (gig == null)
+            {
+                return NotFound();
+            }
+            return Ok(gig);
+        }
+        //--------
 
         //// POST api/<GigController>
         [HttpPost]
