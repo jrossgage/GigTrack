@@ -7,6 +7,7 @@ import GigList from "./Gig/GigList";
 import GigDetails from "./Gig/GigDetails";
 import GigAddForm from "./Gig/GigAddForm";
 import GigEditForm from "./Gig/GigEditForm";
+import LocationAddForm from "./Location/LocationAddForm";
 
 export default function ApplicationViews({ isLoggedIn }) {
 
@@ -40,6 +41,10 @@ export default function ApplicationViews({ isLoggedIn }) {
                 <Route path="/gig/add" exact>
                     {isLoggedIn ? <GigAddForm /> : <Redirect to="/login" />}
                 </Route>
+
+                {/* <Route path="/location/add" exact>
+                    {isLoggedIn ? <LocationAddForm /> : <Redirect to="/login" />}
+                </Route> */}
 
                 {/* <Route path="/client" exact>
                     {isLoggedIn ? <Home /> : <Redirect to="/login" />}

@@ -2,25 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { addGig } from '../../modules/gigManager';
-import { getAllLocations } from '../../modules/locationManager';
+import { getAllLocations, addLocation } from '../../modules/locationManager';
 import { getAllClients } from '../../modules/clientManager';
 
 const GigAddForm = () => {
     const emptyGig = {
         pay: 0,
-        date: 0,
         mileage: 0,
         clientId: 0,
         venueName: '',
         locationId: 0,
         notes: '',
     };
+    const emptyLocation = {
+        city: '',
+        state: '',
+    };
 
     const [newGig, setNewGig] = useState(emptyGig);
+    const [newLocation, setNewLocation] = useState(emptyLocation);
     const [locations, setLocations] = useState([]);
     const [clients, setClients] = useState([]);
+    const [showLocationForm, setShowLocationForm] = useState(false);
     const history = useHistory();
 
+
+    const toggle = () => setShowLocationForm(!showLocationForm)
 
     const handleInputChange = (e) => {
         const value = e.target.value;
@@ -40,7 +47,6 @@ const GigAddForm = () => {
 
             setNewGig({
                 pay: 0,
-                date: 0,
                 mileage: 0,
                 clientId: 0,
                 venueName: '',
@@ -55,6 +61,36 @@ const GigAddForm = () => {
             });
         }
     }
+
+    const handleLocationSave = (e) => {
+        e.preventDefault();
+
+        if (newLocation.city === '' || newLocation.state === '') {
+            window.alert(`Please input more information`)
+
+            setNewLocation({
+                city: '',
+                state: ''
+            })
+            // return history.push('/location/add');
+        }
+        else {
+            addLocation(newLocation).then(() => {
+                toggle();
+            })
+            getLocations();
+        }
+    }
+
+    const handleLocationInputChange = (e) => {
+        const value = e.target.value;
+        const key = e.target.id;
+
+        const locationCopy = { ...newLocation };
+
+        locationCopy[key] = value;
+        setNewLocation(locationCopy);
+    };
 
     //Make handler functions for the location and client fetch calls
     const getLocations = () => {
@@ -76,7 +112,7 @@ const GigAddForm = () => {
     useEffect(() => {
         getClients();
         getLocations();
-    }, [])
+    }, [locations])
 
     return (
         <Form className="container w-75">
@@ -123,7 +159,26 @@ const GigAddForm = () => {
                     ))}
                 </select>
             </FormGroup>
-            {/* <Button className="btn btn-primary" onClick={}>Add New Location</Button> */}
+            <Button className="btn btn-primary" onClick={toggle}>Add New Location</Button>
+
+            {showLocationForm &&
+                <>
+                    <FormGroup>
+                        <Input type="text" name="city" id="city" placeholder="city"
+                            value={newLocation.city}
+                            onChange={handleLocationInputChange} />
+                    </FormGroup>
+                    <FormGroup>
+                        <Input type="text" name="state" id="state" placeholder="state"
+                            value={newLocation.state}
+                            onChange={handleLocationInputChange} />
+                    </FormGroup>
+
+                    <Button className="btn btn-primary" onClick={handleLocationSave}>Save</Button>
+                    <Button className="btn btn-primary" onClick={toggle}>Cancel</Button>
+                </>
+            }
+            {/* // <LocationAddForm toggle={toggle} />} */}
 
             <FormGroup>
                 <Label for="notes">Notes</Label>
