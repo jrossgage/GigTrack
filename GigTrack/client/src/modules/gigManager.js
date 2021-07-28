@@ -3,6 +3,7 @@ import { getToken } from "./authManager";
 const baseUrl = '/api/gig';
 
 export const getAllGigs = () => {
+
     return getToken().then((token) => {
 
         return fetch(`${baseUrl}`, {

@@ -9,7 +9,8 @@ const GigList = () => {
 
     //put some logic in here that looks at the dropdown menus and calls the appropriate fetch
     const getGigs = () => {
-        getAllGigs().then(gig => setGigs(gig));
+        debugger
+        getAllGigs().then(g => setGigs(g));
     }
 
     const deleteCurrentGig = (id) => {
@@ -34,7 +35,7 @@ const GigList = () => {
             </div>
             <div className="container">
                 <div>
-                    {gigs.map((gig) => (
+                    {gigs?.map((gig) => (
                         <Gig gig={gig} key={gig.id} deleteCurrentGig={deleteCurrentGig} />
                     ))}
                 </div>
