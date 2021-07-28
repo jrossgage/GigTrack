@@ -157,8 +157,7 @@ namespace GigTrack.Repositories
                                 ClientId = @ClientId,
                                 VenueName = @VenueName,
                                 LocationId = @LocationId,
-                                Notes = @Notes,
-                                UserId = @UserId
+                                Notes = @Notes
                                 WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@Pay", gig.Pay);
@@ -168,7 +167,6 @@ namespace GigTrack.Repositories
                     DbUtils.AddParameter(cmd, "@VenueName", gig.VenueName);
                     DbUtils.AddParameter(cmd, "@LocationId", gig.LocationId);
                     DbUtils.AddParameter(cmd, "@Notes", gig.Notes);
-                    DbUtils.AddParameter(cmd, "@UserId", gig.UserId);
                     DbUtils.AddParameter(cmd, "@Id", gig.Id);
 
                     cmd.ExecuteNonQuery();
