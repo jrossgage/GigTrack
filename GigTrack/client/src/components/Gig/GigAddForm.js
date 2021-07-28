@@ -159,7 +159,7 @@ const GigAddForm = () => {
                     ))}
                 </select>
             </FormGroup>
-            <Button className="btn btn-primary" onClick={toggle}>Add New Location</Button>
+            <Button className="btn btn-primary" onClick={toggle}>{showLocationForm ? 'Cancel' : 'Add New Location'}</Button>
 
             {showLocationForm &&
                 <>
@@ -174,8 +174,8 @@ const GigAddForm = () => {
                             onChange={handleLocationInputChange} />
                     </FormGroup>
 
-                    <Button className="btn btn-primary" onClick={handleLocationSave}>Save</Button>
-                    <Button className="btn btn-primary" onClick={toggle}>Cancel</Button>
+                    <Button className="btn btn-primary" onClick={handleLocationSave}>Save Location</Button>
+                    {/* <Button className="btn btn-primary" onClick={toggle}>Cancel</Button> */}
                 </>
             }
             {/* // <LocationAddForm toggle={toggle} />} */}
