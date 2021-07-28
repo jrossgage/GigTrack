@@ -5,7 +5,7 @@ import Gig from "./Gig";
 
 const GigList = () => {
 
-    const [gigs, setGigs] = useState();
+    const [gigs, setGigs] = useState([]);
 
     //put some logic in here that looks at the dropdown menus and calls the appropriate fetch
     const getGigs = () => {
