@@ -9,7 +9,6 @@ const GigList = () => {
 
     //put some logic in here that looks at the dropdown menus and calls the appropriate fetch
     const getGigs = () => {
-        debugger
         getAllGigs().then(g => setGigs(g));
     }
 
