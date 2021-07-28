@@ -227,7 +227,7 @@ namespace GigTrack.Repositories
                               g.clientId, g.venueName, g.locationId,
                               g.userId, g.notes, 
                               l.id, l.city, l.[state], l.userId,
-                              c.id, c.companyName, c.phoneNumber, c.email, c.userId,
+                              c.id AS ClientObjectId, c.companyName, c.phoneNumber, c.email, c.userId,
                               u.id, u.[name], u.[email], u.firebaseUserId
                          FROM Gig g
                               LEFT JOIN Location l ON g.locationId = l.id
@@ -267,7 +267,7 @@ namespace GigTrack.Repositories
                               g.clientId, g.venueName, g.locationId,
                               g.userId, g.notes, 
                               l.id, l.city, l.[state], l.userId,
-                              c.id, c.companyName, c.phoneNumber, c.email, c.userId,
+                              c.id AS ClientObjectId, c.companyName, c.phoneNumber, c.email, c.userId,
                               u.id, u.[name], u.[email], u.firebaseUserId
                          FROM Gig g
                               LEFT JOIN Location l ON g.locationId = l.id
