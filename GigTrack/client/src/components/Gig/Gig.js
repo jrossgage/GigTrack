@@ -8,7 +8,7 @@ const Gig = ({ gig, deleteCurrentGig }) => {
         <Card >
             <div>
 
-                <p><b><Link to={`/gig/details/${gig.id}`}></Link>{`${gig.venueName} with ${gig.client.companyName}`}</b></p>
+                <p><b><Link to={`/gig/details/${gig.id}`}>{`${gig.venueName} with ${gig.client.companyName}`}</Link></b></p>
 
 
                 <p><b>{`${gig.location.city}, ${gig.location.state}`}</b></p>
