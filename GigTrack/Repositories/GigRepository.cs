@@ -26,9 +26,11 @@ namespace GigTrack.Repositories
                               g.clientId, g.venueName, g.locationId,
                               g.userId, g.notes, 
                               l.id, l.city, l.[state], l.userId,
+                              c.id AS ClientObjectId, c.companyName, c.phoneNumber, c.email,
                               u.id, u.[name], u.[email], u.firebaseUserId
                          FROM Gig g
                               LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN Client c ON g.clientId = c.id
                               LEFT JOIN UserProfile u on g.userId = u.id
                         WHERE firebaseUserId = @firebaseUserId
                          ORDER BY g.[date] DESC";
@@ -62,9 +64,11 @@ namespace GigTrack.Repositories
                               g.clientId, g.venueName, g.locationId,
                               g.userId, g.notes, 
                               l.id, l.city, l.[state], l.userId,
+                              c.id AS ClientObjectId, c.companyName, c.phoneNumber, c.email,
                               u.id, u.[name], u.[email], u.firebaseUserId
                          FROM Gig g
                               LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN Client c ON g.clientId = c.id
                               LEFT JOIN UserProfile u on g.userId = u.id
                         WHERE firebaseUserId = @firebaseUserId AND g.id = @id";
                     DbUtils.AddParameter(cmd, "@firebaseUserId", firebaseUserId);
@@ -185,9 +189,11 @@ namespace GigTrack.Repositories
                               g.clientId, g.venueName, g.locationId,
                               g.userId, g.notes, 
                               l.id, l.city, l.[state], l.userId,
+                              c.id AS ClientObjectId, c.companyName, c.phoneNumber, c.email,
                               u.id, u.[name], u.[email], u.firebaseUserId
                          FROM Gig g
                               LEFT JOIN Location l ON g.locationId = l.id
+                              LEFT JOIN Client c ON g.clientId = c.id
                               LEFT JOIN UserProfile u on g.userId = u.id
                         WHERE firebaseUserId = @firebaseUserId AND l.id = @locationId
                          ORDER BY g.[date] DESC";
@@ -299,6 +305,14 @@ namespace GigTrack.Repositories
                 Date = DbUtils.GetDateTime(reader, "date"),
                 Mileage = DbUtils.GetInt(reader, "mileage"),
                 ClientId = DbUtils.GetInt(reader, "clientId"),
+                Client = new Client()
+                {
+                    Id = DbUtils.GetInt(reader, "ClientObjectId"),
+                    CompanyName = DbUtils.GetString(reader, "companyName"),
+                    PhoneNumber = DbUtils.GetInt(reader, "PhoneNumber"),
+                    Email = DbUtils.GetString(reader, "email"),
+                    UserId = DbUtils.GetInt(reader, "userId")
+                },
                 VenueName = DbUtils.GetString(reader, "venueName"),
                 LocationId = DbUtils.GetInt(reader, "locationId"),
                 Location = new Location()

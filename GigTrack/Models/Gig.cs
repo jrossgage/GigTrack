@@ -17,6 +17,7 @@ namespace GigTrack.Models
         public string Notes { get; set; }
         public int UserId { get; set; }
         public Location Location { get; set; }
+        public Client Client { get; set; }
 
     }
 }
