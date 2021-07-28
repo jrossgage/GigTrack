@@ -41,7 +41,7 @@ namespace GigTrack.Controllers
         }
 
         //GET api/<GigController>/5
-        [HttpGet("{id}")]
+        [HttpGet("details/{id}")]
         public IActionResult GetById(int id)
         {
             string currentUserProfileId = GetCurrentFirebaseUserProfileId();

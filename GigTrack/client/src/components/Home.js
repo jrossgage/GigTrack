@@ -9,6 +9,6 @@ export default function Home() {
             top: "50%",
             marginTop: "-0.5rem",
             textAlign: "center",
-        }}>hello</span>
+        }}>don't panic.</span>
     );
 }
