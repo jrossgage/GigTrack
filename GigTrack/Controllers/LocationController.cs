@@ -48,6 +48,7 @@ namespace GigTrack.Controllers
         //}
 
         // POST api/<LocationController>
+
         [HttpPost]
         public IActionResult Post(Location location)
         {
@@ -59,10 +60,10 @@ namespace GigTrack.Controllers
         }
 
         // PUT api/<LocationController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
         // DELETE api/<LocationController>/5
         [HttpDelete("{id}")]
