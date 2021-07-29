@@ -10,6 +10,7 @@ const GigAddForm = () => {
         pay: 0,
         mileage: 0,
         clientId: 0,
+        date: 0,
         venueName: '',
         locationId: 0,
         notes: '',
@@ -51,6 +52,7 @@ const GigAddForm = () => {
                 clientId: 0,
                 venueName: '',
                 locationId: 0,
+                date: 0,
                 notes: '',
             })
             return history.push('/gig/add');
@@ -126,19 +128,19 @@ const GigAddForm = () => {
             <FormGroup>
                 <Label for="pay">Pay</Label>
                 <Input type="number" name="pay" id="pay" placeholder="pay"
-                    value={newGig.pay}
+                    // value={newGig.pay}
                     onChange={handleInputChange} />
             </FormGroup>
             <FormGroup>
                 <Label for="mileage">Mileage</Label>
                 <Input type="number" name="mileage" id="mileage" placeholder="mileage"
-                    value={newGig.mileage}
+                    // value={newGig.mileage}
                     onChange={handleInputChange} />
             </FormGroup>
             <FormGroup>
                 <Label for="date">Date</Label>
                 <Input type="date" name="date" id="date" placeholder="date"
-                    value={newGig.date}
+                    // value={newGig.date}
                     onChange={handleInputChange} />
             </FormGroup>
             <FormGroup>

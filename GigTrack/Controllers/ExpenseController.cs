@@ -39,7 +39,7 @@ namespace GigTrack.Controllers
         }
 
         // GET api/<ExpenseController>/5
-        [HttpGet("{id}")]
+        [HttpGet("details/{id}")]
         public IActionResult GetById(int id)
         {
             string currentUserProfileId = GetCurrentFirebaseUserProfileId();
