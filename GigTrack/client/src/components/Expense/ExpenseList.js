@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getAllExpense, deleteExpense } from '../../modules/expenseManager';
 import { Link, useHistory } from "react-router-dom";
-import Expense from "../Expense/Expense";
+import Expense from "../Expense/Expense"
 
 const ExpenseList = () => {
 

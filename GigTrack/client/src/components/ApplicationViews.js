@@ -11,6 +11,10 @@ import ExpenseList from "./Expense/ExpenseList";
 import ExpenseEditForm from "./Expense/ExpenseEditForm";
 import ExpenseAddForm from "./Expense/ExpenseAddForm";
 import ExpenseDetails from "./Expense/ExpenseDetails";
+import ClientList from "./Client/ClientList";
+import ClientAddForm from "./Client/ClientAddForm";
+import ClientDetails from "./Client/ClientDetails";
+import ClientEditForm from "./Client/ClientEditForm";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -30,6 +34,7 @@ export default function ApplicationViews({ isLoggedIn }) {
                     <Register />
                 </Route>
 
+
                 <Route path="/gig" exact>
                     {isLoggedIn ? <GigList /> : <Redirect to="/login" />}
                 </Route>
@@ -46,9 +51,23 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <GigAddForm /> : <Redirect to="/login" />}
                 </Route>
 
-                {/* <Route path="/client" exact>
-                    {isLoggedIn ? <Home /> : <Redirect to="/login" />}
-                </Route>  */}
+
+                <Route path="/client" exact>
+                    {isLoggedIn ? <ClientList /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/client/add" exact>
+                    {isLoggedIn ? <ClientAddForm /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/client/details/:id" exact>
+                    {isLoggedIn ? <ClientDetails /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/client/edit/:id" exact>
+                    {isLoggedIn ? <ClientEditForm /> : <Redirect to="/login" />}
+                </Route>
+
 
                 <Route path="/expense" exact>
                     {isLoggedIn ? <ExpenseList /> : <Redirect to="/login" />}
