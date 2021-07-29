@@ -77,9 +77,6 @@ const GigList = () => {
     const handleDropDownChange = (e) => {
         const menuName = e.target.name;
         const id = e.target.value;
-        console.log("small drop down Id", id)
-        console.log("Menu Name", menuName)
-
 
         if (id === 0) {
             getGigs();

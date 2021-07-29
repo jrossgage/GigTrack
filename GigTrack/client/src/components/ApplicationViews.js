@@ -7,6 +7,10 @@ import GigList from "./Gig/GigList";
 import GigDetails from "./Gig/GigDetails";
 import GigAddForm from "./Gig/GigAddForm";
 import GigEditForm from "./Gig/GigEditForm";
+import ExpenseList from "./Expense/ExpenseList";
+import ExpenseEditForm from "./Expense/ExpenseEditForm";
+import ExpenseAddForm from "./Expense/ExpenseAddForm";
+import ExpenseDetails from "./Expense/ExpenseDetails";
 
 
 export default function ApplicationViews({ isLoggedIn }) {
@@ -42,17 +46,26 @@ export default function ApplicationViews({ isLoggedIn }) {
                     {isLoggedIn ? <GigAddForm /> : <Redirect to="/login" />}
                 </Route>
 
-                {/* <Route path="/location/add" exact>
-                    {isLoggedIn ? <LocationAddForm /> : <Redirect to="/login" />}
-                </Route> */}
-
                 {/* <Route path="/client" exact>
                     {isLoggedIn ? <Home /> : <Redirect to="/login" />}
-                </Route>
+                </Route>  */}
 
                 <Route path="/expense" exact>
-                    {isLoggedIn ? <Home /> : <Redirect to="/login" />}
-                </Route> */}
+                    {isLoggedIn ? <ExpenseList /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/expense/add" exact>
+                    {isLoggedIn ? <ExpenseAddForm /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/expense/details/:id" exact>
+                    {isLoggedIn ? <ExpenseDetails /> : <Redirect to="/login" />}
+                </Route>
+
+                <Route path="/expense/edit/:id" exact>
+                    {isLoggedIn ? <ExpenseEditForm /> : <Redirect to="/login" />}
+                </Route>
+
 
             </Switch>
         </main>

@@ -134,14 +134,12 @@ namespace GigTrack.Repositories
                                
                                 Name = @Name,
                                 Cost = @Cost,
-                                Date = @Date,
-                                UserId = @UserId
+                                Date = @Date
                                 WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@Name", expense.Name);
                     DbUtils.AddParameter(cmd, "@Cost", expense.Cost);
                     DbUtils.AddParameter(cmd, "@Date", expense.Date);
-                    DbUtils.AddParameter(cmd, "@UserId", expense.UserId);
                     DbUtils.AddParameter(cmd, "@Id", expense.Id);
 
                     cmd.ExecuteNonQuery();
