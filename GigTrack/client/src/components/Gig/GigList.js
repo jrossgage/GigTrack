@@ -12,12 +12,16 @@ const GigList = () => {
     const [locations, setLocations] = useState([]);
     const [clients, setClients] = useState([]);
     const [venues, setVenues] = useState([]);
+    const [totalPay, setTotalPay] = useState(0);
 
     const [dropDownSelection, setDropDownSelection] = useState(0);
     const history = useHistory();
 
     const getGigs = () => {
-        getAllGigs().then(g => setGigs(g));
+        getAllGigs().then(g => {
+            setGigs(g);
+            getTotalPay(g);
+        })
     };
 
     const deleteCurrentGig = (id) => {
@@ -43,11 +47,18 @@ const GigList = () => {
     };
 
     const getVenueNames = () => {
-        const venueNamesArry = [];
+        const venueNamesArray = [];
         gigs.map(gig =>
-            venueNamesArry.push(gig.venueName))
-        setVenues(venueNamesArry);
-        console.log(venueNamesArry);
+            venueNamesArray.push(gig.venueName))
+        setVenues(venueNamesArray);
+    };
+
+    const getTotalPay = (gigs) => {
+        let total = 0;
+        for (let g of gigs) {
+            total += g.pay
+        }
+        setTotalPay(total);
     }
     //-------------------
 
@@ -96,6 +107,10 @@ const GigList = () => {
     //--------------------
     useEffect(() => {
         getGigs();
+        // getTotalPay();
+    }, []);
+
+    useEffect(() => {
         getLocations();
         getClients();
         getVenueNames();
@@ -103,51 +118,58 @@ const GigList = () => {
 
     return (
         <>
-            <Form>
-                <FormGroup>
-                    <select onChange={handleMainDropMenu}>
-                        <option value="0">Filter by:</option>
-                        <option value="1">Venue</option>
-                        <option value="2">Clients</option>
-                        <option value="3">Locations</option>
-                    </select>
-                </FormGroup>
-                {dropDownSelection === '1' &&
+            <div className='container'>
+                <div>
+                    <h4>Total Income for the year:</h4>
+                    <p>{`$${totalPay}`}</p>
+                </div>
+
+                <Form>
                     <FormGroup>
-                        <Label for="Venue">Venue</Label>
-                        <select name="venues" id="venues" onChange={handleDropDownChange} className='form-control'>
-                            <option value="0">Venue</option>
-                            {venues.map(v => (
-                                <option key={v} value={v}>{v}</option>
-                            ))}
+                        <select onChange={handleMainDropMenu}>
+                            <option value="0">Filter by:</option>
+                            <option value="1">Venue</option>
+                            <option value="2">Clients</option>
+                            <option value="3">Locations</option>
                         </select>
                     </FormGroup>
-                }
-                {dropDownSelection === '2' &&
-                    <FormGroup>
-                        <select name="clients" id="clients" onChange={handleDropDownChange} className='form-control'>
-                            <option value="0">Client</option>
-                            {clients.map(c => (
-                                <option key={c.id} value={c.id}>{c.companyName}</option>
-                            ))}
-                        </select>
-                    </FormGroup>}
-                {dropDownSelection === '3' &&
-                    <FormGroup>
-                        <select name="locations" id="locations" onChange={handleDropDownChange} className='form-control'>
-                            <option value="0">Location</option>
-                            {locations.map(l => (
-                                <option key={l.id} value={l.id}>{`${l.city}, ${l.state}`}</option>
-                            ))}
-                        </select>
-                    </FormGroup>}
-            </Form>
-            <div className="container">
+                    {dropDownSelection === '1' &&
+                        <FormGroup>
+                            <Label for="Venue">Venue</Label>
+                            <select name="venues" id="venues" onChange={handleDropDownChange} className='form-control'>
+                                <option value="0">Venue</option>
+                                {venues.map(v => (
+                                    <option key={v} value={v}>{v}</option>
+                                ))}
+                            </select>
+                        </FormGroup>
+                    }
+                    {dropDownSelection === '2' &&
+                        <FormGroup>
+                            <select name="clients" id="clients" onChange={handleDropDownChange} className='form-control'>
+                                <option value="0">Client</option>
+                                {clients.map(c => (
+                                    <option key={c.id} value={c.id}>{c.companyName}</option>
+                                ))}
+                            </select>
+                        </FormGroup>}
+                    {dropDownSelection === '3' &&
+                        <FormGroup>
+                            <select name="locations" id="locations" onChange={handleDropDownChange} className='form-control'>
+                                <option value="0">Location</option>
+                                {locations.map(l => (
+                                    <option key={l.id} value={l.id}>{`${l.city}, ${l.state}`}</option>
+                                ))}
+                            </select>
+                        </FormGroup>}
+                </Form>
+                <div className="container">
 
-                <Link to="/gig/add">
-                    <button className="btn btn-primary">New Gig</button>
-                </Link>
+                    <Link to="/gig/add">
+                        <button className="btn btn-primary">New Gig</button>
+                    </Link>
 
+                </div>
             </div>
             <div className="container">
                 <div>

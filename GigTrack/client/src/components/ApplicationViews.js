@@ -7,7 +7,7 @@ import GigList from "./Gig/GigList";
 import GigDetails from "./Gig/GigDetails";
 import GigAddForm from "./Gig/GigAddForm";
 import GigEditForm from "./Gig/GigEditForm";
-import LocationAddForm from "./Location/LocationAddForm";
+
 
 export default function ApplicationViews({ isLoggedIn }) {
 
