@@ -20,13 +20,14 @@ const ExpenseDetails = () => {
 
     return (
         <>
-            <h2 className="text-center">Details </h2>
+            <h2 className="text-center">Expense Details </h2>
             <Card className="w-75 mx-auto">
                 <CardBody>
-                    <h4>Expense Details</h4>
-                    <p>{expense.name}</p>
-                    <p>{`$${expense.cost}`}</p>
-                    <p>{`Date Purchased: ${expense.date}`}</p>
+                    <h4>{expense.name}</h4>
+                    <div>
+                        <p>{`$${expense.cost}`}</p>
+                        <p>{`Date Purchased: ${expense.date}`}</p>
+                    </div>
                     <Link to={`/expense`}>
                         <Button className="btn btn-primary">To Expenses</Button>
                     </Link>

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { getGigById } from "../../modules/gigManager";
 
 const GigDetails = () => {
-    const [gig, setGig] = useState();
+    const [gig, setGig] = useState({});
     const { id } = useParams();
 
     const getGigDetails = () => {
@@ -24,14 +24,14 @@ const GigDetails = () => {
             <Card className="w-75 mx-auto">
                 <CardBody>
                     <h4>Gig Details</h4>
-                    <Link to={`/client/details/${gig?.clientId}`}><p><b>{gig?.client.companyName}</b></p></Link>
-                    <p>At {gig?.venueName}</p>
-                    <p>{gig?.location.city}</p>
-                    <p>{gig?.location.state}</p>
-                    <p>{gig?.mileage} miles</p>
-                    <p>{gig?.date}</p>
-                    <p>{gig?.notes}</p>
-                    <p>Pay: {gig?.pay}</p>
+                    <Link to={`/client/details/${gig.clientId}`}><p><b>{gig?.client?.companyName}</b></p></Link>
+                    <p>At {gig.venueName}</p>
+                    <p>{gig?.location?.city}</p>
+                    <p>{gig?.location?.state}</p>
+                    <p>{gig.mileage} miles</p>
+                    <p>{gig.date}</p>
+                    <p>{gig.notes}</p>
+                    <p>Pay: {gig.pay}</p>
 
                     <Link to={`/gig`}>
                         <Button className="btn btn-primary">Back to Gigs</Button>

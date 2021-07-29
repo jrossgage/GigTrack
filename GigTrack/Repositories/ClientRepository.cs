@@ -148,15 +148,13 @@ namespace GigTrack.Repositories
                                 
                                 CompanyName = @CompanyName,
                                 PhoneNumber = @PhoneNumber,
-                                Email = @Email,
-                                UserId = @UserId
+                                Email = @Email
                                 WHERE Id = @id";
 
                     DbUtils.AddParameter(cmd, "@Id", client.Id);
                     DbUtils.AddParameter(cmd, "@CompanyName", client.CompanyName);
                     DbUtils.AddParameter(cmd, "@PhoneNumber", client.PhoneNumber);
                     DbUtils.AddParameter(cmd, "@Email", client.Email);
-                    DbUtils.AddParameter(cmd, "@UserId", client.UserId);
                    
 
                     cmd.ExecuteNonQuery();
