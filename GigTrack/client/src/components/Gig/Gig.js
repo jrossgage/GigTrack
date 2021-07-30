@@ -32,6 +32,7 @@ const Gig = ({ gig, deleteCurrentGig }) => {
 }
 export const ClientGig = ({ gig }) => {
 
+    const cutDate = dateFixer(gig);
     return (
         <Card >
             <div>
@@ -41,7 +42,7 @@ export const ClientGig = ({ gig }) => {
 
                 <p><b>{`In ${gig.location.city}, ${gig.location.state}`}</b></p>
 
-                <p><b>{gig.date}</b></p>
+                <p><b>{cutDate}</b></p>
 
             </div>
         </Card>

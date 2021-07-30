@@ -4,10 +4,14 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getGigById } from "../../modules/gigManager";
+import { dateFixer } from "../../modules/helper";
 
 const GigDetails = () => {
+
     const [gig, setGig] = useState({});
     const { id } = useParams();
+
+    const cutDate = dateFixer(gig);
 
     const getGigDetails = () => {
         getGigById(id)
@@ -28,7 +32,7 @@ const GigDetails = () => {
                     <p>At {gig.venueName}</p>
                     <p>{`${gig?.location?.city}, ${gig?.location?.state}`}</p>
                     <p>{gig.mileage} miles</p>
-                    <p>{gig.date}</p>
+                    <p>{cutDate}</p>
                     <p>{gig.notes}</p>
                     <p>Pay: {gig.pay}</p>
 
