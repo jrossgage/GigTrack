@@ -4,6 +4,7 @@ import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getAllLocations } from '../../modules/locationManager';
 import { getAllClients } from '../../modules/clientManager';
 import { getGigById, updateGig } from '../../modules/gigManager';
+import { momentDateFixer } from '../../modules/helper';
 
 const GigEditForm = () => {
     const [editGig, setEditGig] = useState({});
@@ -23,6 +24,22 @@ const GigEditForm = () => {
         gigCopy[key] = value;
         setEditGig(gigCopy);
     };
+
+    const getEditGigById = () => {
+        return getGigById(id).then(gig => {
+            let editedGig = gig
+            editedGig.date = momentDateFixer(gig)
+            setEditGig(editedGig);
+            setIsLoading(false)
+        })
+    }
+    // const fetchProperty = () => {
+    //     return getPropertyById(id).then(property => {
+    //         let editedProperty = property
+    //         editedProperty.lastService = momentDateFixer(property)
+    //         setProperty(editedProperty)
+    //     });
+    // }
 
     const getLocations = () => {
         return getAllLocations()
@@ -58,14 +75,19 @@ const GigEditForm = () => {
             });
     };
 
+    const handleDate = (event) => {
+        event.preventDefault();
+        let editedGig = { ...editGig };
+        console.log(event.target.value)
+        let editDate = event.target.value
+        editedGig[event.target.id] = editDate
+        setEditGig(editedGig)
+    }
+
     useEffect(() => {
         getClients();
         getLocations();
-        getGigById(id)
-            .then(g => {
-                setEditGig(g);
-                setIsLoading(false)
-            });
+        getEditGigById();
     }, [id])
 
     return (
@@ -91,9 +113,9 @@ const GigEditForm = () => {
             </FormGroup>
             <FormGroup>
                 <Label for="date">Date</Label>
-                <Input type="date" name="date" id="date" placeholder="date"
+                <Input type="date" name="date" id="date" placeholder="date" defaultValue={momentDateFixer(editGig)} format="YYYY-MM-DD"
                     value={editGig.date}
-                    onChange={handleInputChange} />
+                    onChange={handleDate} />
             </FormGroup>
             <FormGroup>
                 <Label for="Client">Client </Label>

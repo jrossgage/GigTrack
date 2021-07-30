@@ -26,6 +26,28 @@ const ClientDetails = () => {
         })
     };
 
+    const gigClientDisplay = () => {
+        console.log(gigs);
+        if (gigs.length < 1) {
+            return (
+                <div className="container">
+                    <h4>You have no gigs with this client</h4>
+                </div>
+            )
+        } else {
+
+            return (
+                <div className="container">
+                    <div>
+                        {gigs?.map((gig) => (
+                            <ClientGig gig={gig} key={gig.id} />
+                        ))}
+                    </div>
+                </div>
+            )
+        }
+    };
+
     useEffect(() => {
         getClientDetails();
         getGigs();
@@ -48,15 +70,7 @@ const ClientDetails = () => {
 
                     <Button className="btn btn-primary" onClick={toggle}>{showClientGigs ? 'Hide' : 'See'} All Gigs from Client</Button>
 
-                    {showClientGigs &&
-                        <div className="container">
-                            <div>
-                                {gigs?.map((gig) => (
-                                    <ClientGig gig={gig} key={gig.id} />
-                                ))}
-                            </div>
-                        </div>
-                    }
+                    {showClientGigs && gigClientDisplay()}
 
 
                 </CardBody>

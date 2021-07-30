@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, Cardbody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { dateFixer } from "../../modules/helper";
 
 const Gig = ({ gig, deleteCurrentGig }) => {
+
+    const cutDate = dateFixer(gig);
 
     return (
         <Card >
@@ -13,7 +16,7 @@ const Gig = ({ gig, deleteCurrentGig }) => {
 
                 <p><b>{`${gig.location.city}, ${gig.location.state}`}</b></p>
 
-                <p><b>{gig.date}</b></p>
+                <p><b>{`On ${cutDate}`}</b></p>
 
                 <div>
                     <button className="btn btn-danger" onClick={() => deleteCurrentGig(gig.id)}>Delete</button>
