@@ -17,6 +17,7 @@ const Gig = ({ gig, deleteCurrentGig }) => {
                 <p><b>{`${gig.location.city}, ${gig.location.state}`}</b></p>
 
                 <p><b>{`On ${cutDate}`}</b></p>
+                <p>{`Pay: $${gig.pay}`}</p>
 
                 <div>
                     <button className="btn btn-danger" onClick={() => deleteCurrentGig(gig.id)}>Delete</button>

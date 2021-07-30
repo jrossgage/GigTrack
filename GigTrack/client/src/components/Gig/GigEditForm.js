@@ -33,13 +33,6 @@ const GigEditForm = () => {
             setIsLoading(false)
         })
     }
-    // const fetchProperty = () => {
-    //     return getPropertyById(id).then(property => {
-    //         let editedProperty = property
-    //         editedProperty.lastService = momentDateFixer(property)
-    //         setProperty(editedProperty)
-    //     });
-    // }
 
     const getLocations = () => {
         return getAllLocations()
@@ -78,7 +71,7 @@ const GigEditForm = () => {
     const handleDate = (event) => {
         event.preventDefault();
         let editedGig = { ...editGig };
-        console.log(event.target.value)
+
         let editDate = event.target.value
         editedGig[event.target.id] = editDate
         setEditGig(editedGig)

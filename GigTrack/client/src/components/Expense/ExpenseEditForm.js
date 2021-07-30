@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getExpenseById, updateExpense } from '../../modules/expenseManager';
+import { momentDateFixer } from '../../modules/helper';
 
 const ExpenseEditForm = () => {
     const [editExpense, setEditExpense] = useState({});
@@ -20,6 +21,15 @@ const ExpenseEditForm = () => {
         setEditExpense(expenseCopy);
     };
 
+    const getEditExpenseById = () => {
+        return getExpenseById(id).then(expense => {
+            let editedExpense = expense
+            editedExpense.date = momentDateFixer(expense)
+            setEditExpense(editedExpense);
+            setIsLoading(false)
+        })
+    }
+
     const handleUpdate = (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -36,12 +46,17 @@ const ExpenseEditForm = () => {
             });
     };
 
+    const handleDate = (event) => {
+        event.preventDefault();
+        let editedExpense = { ...editExpense };
+
+        let editDate = event.target.value
+        editedExpense[event.target.id] = editDate
+        setEditExpense(editedExpense)
+    }
+
     useEffect(() => {
-        getExpenseById(id)
-            .then(e => {
-                setEditExpense(e);
-                setIsLoading(false)
-            });
+        getEditExpenseById();
     }, [id])
 
     return (
@@ -61,9 +76,9 @@ const ExpenseEditForm = () => {
             </FormGroup>
             <FormGroup>
                 <Label for="date">Date</Label>
-                <Input type="date" name="date" id="date" placeholder="date"
+                <Input type="date" name="date" id="date" placeholder="date" defaultValue={momentDateFixer(editExpense)} format="YYYY-MM-DD"
                     value={editExpense.date}
-                    onChange={handleInputChange} />
+                    onChange={handleDate} />
             </FormGroup>
 
             <Button className="btn btn-primary" onClick={handleUpdate}>Save</Button>
