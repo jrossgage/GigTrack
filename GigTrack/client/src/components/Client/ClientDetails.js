@@ -4,18 +4,31 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getClientById } from "../../modules/clientManager";
+import { filterGigsByClientId } from "../../modules/gigManager";
+import Gig, { ClientGig } from "../Gig/Gig"
 
 const ClientDetails = () => {
     const [client, setClient] = useState({});
+    const [gigs, setGigs] = useState([]);
+    const [showClientGigs, setShowClientGigs] = useState(false);
     const { id } = useParams();
+
+    const toggle = () => setShowClientGigs(!showClientGigs);
 
     const getClientDetails = () => {
         getClientById(id)
             .then(setClient)
     }
 
+    const getGigs = () => {
+        filterGigsByClientId(id).then(g => {
+            setGigs(g);
+        })
+    };
+
     useEffect(() => {
         getClientDetails();
+        getGigs();
     }, []);
 
     return (
@@ -28,14 +41,24 @@ const ClientDetails = () => {
                         <p>{client.phoneNumber}</p>
                         <p>{client.email}</p>
                     </div>
-
-                    {/* <Link to={`/client`}>
-                        <Button className="btn btn-primary">See All Gigs from Client</Button>
-                    </Link> */}
-
                     <Link to={`/client`}>
                         <Button className="btn btn-primary">To Clients</Button>
                     </Link>
+
+
+                    <Button className="btn btn-primary" onClick={toggle}>{showClientGigs ? 'Hide' : 'See'} All Gigs from Client</Button>
+
+                    {showClientGigs &&
+                        <div className="container">
+                            <div>
+                                {gigs?.map((gig) => (
+                                    <ClientGig gig={gig} key={gig.id} />
+                                ))}
+                            </div>
+                        </div>
+                    }
+
+
                 </CardBody>
             </Card >
         </>

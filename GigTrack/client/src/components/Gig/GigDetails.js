@@ -26,8 +26,7 @@ const GigDetails = () => {
                     <h4>Gig Details</h4>
                     <Link to={`/client/details/${gig.clientId}`}><p><b>{gig?.client?.companyName}</b></p></Link>
                     <p>At {gig.venueName}</p>
-                    <p>{gig?.location?.city}</p>
-                    <p>{gig?.location?.state}</p>
+                    <p>{`${gig?.location?.city}, ${gig?.location?.state}`}</p>
                     <p>{gig.mileage} miles</p>
                     <p>{gig.date}</p>
                     <p>{gig.notes}</p>

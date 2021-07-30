@@ -26,4 +26,21 @@ const Gig = ({ gig, deleteCurrentGig }) => {
         </Card>
     )
 }
+export const ClientGig = ({ gig }) => {
+
+    return (
+        <Card >
+            <div>
+
+                <p><b><Link to={`/gig/details/${gig.id}`}>{gig.venueName}</Link></b></p>
+
+
+                <p><b>{`In ${gig.location.city}, ${gig.location.state}`}</b></p>
+
+                <p><b>{gig.date}</b></p>
+
+            </div>
+        </Card>
+    )
+}
 export default Gig;
