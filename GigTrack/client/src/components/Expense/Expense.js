@@ -14,7 +14,7 @@ const Expense = ({ expense, deleteCurrentExpense }) => {
                 <p><b><Link to={`/expense/details/${expense.id}`}>{expense.name}</Link></b></p>
 
 
-                <p><b>{expense.cost}</b></p>
+                <p><b>{`Cost: $${expense.cost}`}</b></p>
 
                 <p><b>{`On ${cutDate}`}</b></p>
 
