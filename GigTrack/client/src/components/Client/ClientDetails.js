@@ -27,7 +27,6 @@ const ClientDetails = () => {
     };
 
     const gigClientDisplay = () => {
-        console.log(gigs);
         if (gigs.length < 1) {
             return (
                 <div className="container">

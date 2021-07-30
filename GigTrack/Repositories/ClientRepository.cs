@@ -193,7 +193,7 @@ namespace GigTrack.Repositories
                         {
                             existingClient = NewClientVMFromReader(reader);
                             clients.Add(existingClient);
-                        };
+                        }
                         if (DbUtils.IsNotDbNull(reader, "pay"))
                         {
                             existingClient.GigPay.Add(DbUtils.GetInt(reader, "pay"));

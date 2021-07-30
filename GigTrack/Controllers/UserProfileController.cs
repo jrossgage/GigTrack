@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -22,7 +23,17 @@ namespace GigTrack.Controllers
             _userProfileRepository = userProfileRepository;
         }
 
-        // GET: api/<UserProfileController>
+        [HttpGet("getCurrentUser")]
+        public IActionResult GetUser()
+        {
+            var currentUser = GetCurrentUserProfile();
+            if(currentUser == null)
+            {
+                return NotFound();
+            }
+            return Ok(currentUser);
+        }
+
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetUserProfile(string firebaseUserId)
         {
@@ -63,5 +74,11 @@ namespace GigTrack.Controllers
         //public void Delete(int id)
         //{
         //}
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+        }
     }
 }
