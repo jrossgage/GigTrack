@@ -8,6 +8,7 @@ export default function Home() {
     const [totalPay, setTotalPay] = useState(0);
     const [totalExpense, setTotalExpense] = useState(0);
     const [totalMileage, setTotalMileage] = useState(0);
+    const [netIncome, setNetIncome] = useState(0);
 
     const getGigPay = () => {
         getAllGigs().then(gigs => {
@@ -30,6 +31,8 @@ export default function Home() {
         }
         setTotalPay(totalP);
         setTotalMileage(totalM);
+        let net = totalPay - totalExpense;
+        setNetIncome(net);
     };
 
     const getTotalExpense = (expenses) => {
@@ -58,6 +61,10 @@ export default function Home() {
                 <div>
                     <h4>Total Expense for the year:</h4>
                     <p>{`$${totalExpense}`}</p>
+                </div>
+                <div>
+                    <h6>Net Income:</h6>
+                    <p>{`$${netIncome}`}</p>
                 </div>
             </div>
             <div className='container'>

@@ -14,9 +14,10 @@ const Expense = ({ expense, deleteCurrentExpense }) => {
                 <p><b><Link to={`/expense/details/${expense.id}`}>{expense.name}</Link></b></p>
 
 
-                <p><b>{`Cost: $${expense.cost}`}</b></p>
-
                 <p><b>{`On ${cutDate}`}</b></p>
+
+                <p>{`Cost: $${expense.cost}`}</p>
+
 
                 <div>
                     <button className="btn btn-danger" onClick={() => deleteCurrentExpense(expense.id)}>Delete</button>
@@ -26,7 +27,7 @@ const Expense = ({ expense, deleteCurrentExpense }) => {
                 </div>
 
             </div>
-        </Card>
+        </Card >
     )
 }
 export default Expense;

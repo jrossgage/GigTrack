@@ -40,6 +40,14 @@ const GigAddForm = () => {
         setNewGig(gigCopy);
     };
 
+    const clientCheck = (e) => {
+        const key = e.target.id;
+        if (key === 'clientId' && clients.length < 1) {
+            window.alert("Please Add a Client First.")
+            history.push("/client/add");
+        }
+    }
+
     const handleSave = (e) => {
         e.preventDefault();
 
@@ -74,7 +82,6 @@ const GigAddForm = () => {
                 city: '',
                 state: ''
             })
-            // return history.push('/location/add');
         }
         else {
             addLocation(newLocation).then(() => {
@@ -145,7 +152,7 @@ const GigAddForm = () => {
             </FormGroup>
             <FormGroup>
                 <Label for="Client">Client </Label>
-                <select value={newGig.clientId} name="clientId" id="clientId" onChange={handleInputChange} className='form-control'>
+                <select value={newGig.clientId} name="clientId" id="clientId" onChange={handleInputChange} onClick={clientCheck} className='form-control'>
                     <option value="0">Client</option>
                     {clients.map(c => (
                         <option key={c.id} value={c.id}>{c.companyName}</option>

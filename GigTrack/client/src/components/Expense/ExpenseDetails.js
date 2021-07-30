@@ -4,10 +4,13 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getExpenseById } from "../../modules/expenseManager";
+import { dateFixer } from "../../modules/helper";
 
 const ExpenseDetails = () => {
     const [expense, setExpense] = useState({});
     const { id } = useParams();
+
+    const cutDate = dateFixer(expense);
 
     const getExpenseDetails = () => {
         getExpenseById(id)
@@ -26,7 +29,7 @@ const ExpenseDetails = () => {
                     <h4>{expense.name}</h4>
                     <div>
                         <p>{`$${expense.cost}`}</p>
-                        <p>{`Date Purchased: ${expense.date}`}</p>
+                        <p>{`Date Purchased: ${cutDate}`}</p>
                     </div>
                     <Link to={`/expense`}>
                         <Button className="btn btn-primary">To Expenses</Button>
