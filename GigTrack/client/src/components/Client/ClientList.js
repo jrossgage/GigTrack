@@ -1,17 +1,30 @@
 import React, { useEffect, useState } from "react";
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
-import { getAllClients, deleteClient } from '../../modules/clientManager';
+import { getAllClients, deleteClient, searchClients } from '../../modules/clientManager';
 import { Link } from "react-router-dom";
 import Client from "../Client/Client";
+
 
 const ClientList = () => {
 
     const [clients, setClients] = useState([]);
+    const [search, setSearch] = useState("");
 
     const getClients = () => {
-        getAllClients().then(c => {
-            setClients(c);
-        })
+        if (search == '') {
+            getAllClients().then(c => {
+                setClients(c);
+            })
+        }
+        else {
+            searchClients(search).then(clients => setClients(clients));
+        }
+    };
+
+    const handleSearch = (evt) => {
+        evt.preventDefault()
+        let searchInput = evt.target.value
+        setSearch(searchInput)
     };
 
     const deleteCurrentClient = (id) => {
@@ -23,13 +36,16 @@ const ClientList = () => {
 
     useEffect(() => {
         getClients();
-    }, []);
+    }, [search]);
 
 
 
     return (
         <>
             <div className="container">
+                <div >
+                    <input type='text' className="search" required onChange={handleSearch} id="search_box" placeholder="Search By Name" />
+                </div>
 
                 <Link to="/client/add">
                     <button className="btn btn-primary">New Client</button>

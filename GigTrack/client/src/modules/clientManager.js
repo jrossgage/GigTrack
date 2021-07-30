@@ -92,3 +92,20 @@ export const updateClient = (editedClient) => {
 
     });
 };
+
+export const searchClients = (string) => {
+    return getToken().then((token) => {
+        return fetch(baseUrl + '/search?q=' + string, {
+            method: "GET",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            }
+        }).then((res) => {
+            if (res.ok) {
+                return res.json();
+            } else {
+                throw new Error("An unknown error occurred while trying to search clients.");
+            }
+        });
+    });
+}
