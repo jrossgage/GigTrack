@@ -91,7 +91,7 @@ const GigEditForm = () => {
             </FormGroup>
             <FormGroup>
                 <Label for="date">Date</Label>
-                <Input type="date" name="date" id="date" placeholder="date"
+                <Input type="date" name="date" id="date" placeholder="date" defaultValue={momentDateFixer(editGig)} format="YYYY-MM-DD"
                     value={editGig.date}
                     onChange={handleInputChange} />
             </FormGroup>
