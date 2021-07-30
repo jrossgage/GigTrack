@@ -27,14 +27,15 @@ const ClientDetails = () => {
     };
 
     const gigClientDisplay = () => {
-        if (!gigs) {
+        console.log(gigs);
+        if (gigs.length < 1) {
             return (
                 <div className="container">
                     <h4>You have no gigs with this client</h4>
                 </div>
             )
         } else {
-            debugger
+
             return (
                 <div className="container">
                     <div>
