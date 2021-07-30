@@ -26,7 +26,7 @@ const ClientEditForm = () => {
 
         const editedClient = {
             id: id,
-            companyName: editClient.companyName,
+            companyName: editClient.name,
             phoneNumber: editClient.phoneNumber,
             email: editClient.email,
         };

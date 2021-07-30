@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, Cardbody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { dateFixer } from "../../modules/helper";
 
 const Expense = ({ expense, deleteCurrentExpense }) => {
+
+    const cutDate = dateFixer(expense);
 
     return (
         <Card >
@@ -13,7 +16,7 @@ const Expense = ({ expense, deleteCurrentExpense }) => {
 
                 <p><b>{expense.cost}</b></p>
 
-                <p><b>{expense.date}</b></p>
+                <p><b>{`On ${cutDate}`}</b></p>
 
                 <div>
                     <button className="btn btn-danger" onClick={() => deleteCurrentExpense(expense.id)}>Delete</button>
