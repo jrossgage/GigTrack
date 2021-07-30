@@ -104,7 +104,6 @@ const GigList = () => {
     //--------------------
     useEffect(() => {
         getGigs();
-        // getTotalPay();
     }, []);
 
     useEffect(() => {
