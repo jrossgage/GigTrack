@@ -9,15 +9,48 @@ const ClientList = () => {
 
     const [clients, setClients] = useState([]);
     const [search, setSearch] = useState("");
+    const [filterClientPay, setFilterClientPay] = useState(false);
 
+    const toggle = () => {
+        setFilterClientPay(!filterClientPay);
+    }
+
+    const filterClientsByPay = () => {
+        let filteredClients = [];
+
+        for (const c of clients) {
+            if (c.paySum >= 600) {
+                filteredClients.push(c)
+            }
+            setClients(filteredClients);
+        }
+    }
+
+    //the conditional line checking for the 1099 button and the search bar. GOAL: to be able to search by name while
+    //the 1099 button is true.
     const getClients = () => {
-        if (search == '') {
+        if (filterClientPay === false && search === '') {
             getAllClients().then(c => {
                 setClients(c);
+                console.log("Step 1")
             })
+        }
+        else if (filterClientPay && search == '') {
+            filterClientsByPay(clients);
+            console.log("Step 2")
+        }
+        else if (filterClientPay && search != '') {
+            searchClients(search).then(clients => setClients(clients))
+                .then(() => {
+                    if (clients.length > 0) {
+                        filterClientsByPay();
+                    }
+                })
+            console.log("Step 3")
         }
         else {
             searchClients(search).then(clients => setClients(clients));
+            console.log("Step 4")
         }
     };
 
@@ -36,7 +69,7 @@ const ClientList = () => {
 
     useEffect(() => {
         getClients();
-    }, [search]);
+    }, [search, filterClientPay]);
 
 
 
@@ -46,6 +79,8 @@ const ClientList = () => {
                 <div >
                     <input type='text' className="search" required onChange={handleSearch} id="search_box" placeholder="Search By Name" />
                 </div>
+
+                <Button className="btn btn-primary" onClick={toggle}>Show{filterClientPay ? ' All' : ' Only 1099'}</Button>
 
                 <Link to="/client/add">
                     <button className="btn btn-primary">New Client</button>
