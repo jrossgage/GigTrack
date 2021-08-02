@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import PhoneInput from 'react-phone-number-input/input'
 import { addClient } from '../../modules/clientManager';
 
 const ClientAddForm = () => {
@@ -11,16 +12,20 @@ const ClientAddForm = () => {
     };
 
     const [newClient, setNewClient] = useState(emptyclient);
+    const [phoneNum, setPhoneNum] = useState();
     const history = useHistory();
 
     const handleInputChange = (e) => {
         const value = e.target.value;
         const key = e.target.id;
 
+
         const clientCopy = { ...newClient };
 
         clientCopy[key] = value;
+        clientCopy.phoneNumber = phoneNum;
         setNewClient(clientCopy);
+        console.log("The Client", clientCopy)
     };
 
     const handleSave = (e) => {
@@ -52,12 +57,13 @@ const ClientAddForm = () => {
                     // value={newClient.name}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <PhoneInput country="US" placeholder="Phone Number" value={phoneNum} onChange={setPhoneNum} maxLength='14' />
+            {/* <FormGroup>
                 <Label for="phoneNumber">Phone Number</Label>
                 <Input type="number" name="phoneNumber" id="phoneNumber" placeholder="Phone Number"
                     // value={newClient.phoneNumber}
                     onChange={handleInputChange} />
-            </FormGroup>
+            </FormGroup> */}
             <FormGroup>
                 <Label for="email">Email</Label>
                 <Input type="text" name="email" id="email" placeholder="Email"
