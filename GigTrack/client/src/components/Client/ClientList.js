@@ -15,15 +15,15 @@ const ClientList = () => {
         setFilterClientPay(!filterClientPay);
     }
 
-    const filterClientsByPay = () => {
+    const filterClientsByPay = (clientArr) => {
         let filteredClients = [];
 
-        for (const c of clients) {
+        for (const c of clientArr) {
             if (c.paySum >= 600) {
                 filteredClients.push(c)
             }
-            setClients(filteredClients);
         }
+        setClients(filteredClients);
     }
 
     //the conditional line checking for the 1099 button and the search bar. GOAL: to be able to search by name while
@@ -32,25 +32,25 @@ const ClientList = () => {
         if (filterClientPay === false && search === '') {
             getAllClients().then(c => {
                 setClients(c);
-                console.log("Step 1")
             })
         }
         else if (filterClientPay && search == '') {
-            filterClientsByPay(clients);
-            console.log("Step 2")
+            // filterClientsByPay(clients);
+            getAllClients().then(c => {
+                filterClientsByPay(c);
+            })
+
         }
         else if (filterClientPay && search != '') {
-            searchClients(search).then(clients => setClients(clients))
-                .then(() => {
-                    if (clients.length > 0) {
-                        filterClientsByPay();
-                    }
-                })
-            console.log("Step 3")
+            searchClients(search).then((c) => {
+                setClients(c)
+                if (c.length > 0) {
+                    filterClientsByPay(c);
+                }
+            })
         }
         else {
             searchClients(search).then(clients => setClients(clients));
-            console.log("Step 4")
         }
     };
 
