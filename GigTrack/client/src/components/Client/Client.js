@@ -1,8 +1,11 @@
 import React from "react";
 import { Card, Cardbody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
+import { formatPhoneNumber } from 'react-phone-number-input'
 
 const Client = ({ client, deleteCurrentClient }) => {
+
+    const cutPhoneNumber = formatPhoneNumber(client.phoneNumber);
 
     return (
         <Card >
@@ -11,9 +14,9 @@ const Client = ({ client, deleteCurrentClient }) => {
                 <p><b><Link to={`/client/details/${client.id}`}>{client.companyName}</Link></b></p>
 
 
-                <p><b>{client.phoneNumber}</b></p>
+                <p><b><a href={`tel:${cutPhoneNumber}`}>{cutPhoneNumber}</a></b></p>
 
-                <p><b>{client.email}</b></p>
+                <p><b><a href={`mailto:${client.email}`}>{client.email}</a></b></p>
 
                 <div>
                     <button className="btn btn-danger" onClick={() => deleteCurrentClient(client.id)}>Delete</button>

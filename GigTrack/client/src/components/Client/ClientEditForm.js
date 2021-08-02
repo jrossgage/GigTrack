@@ -2,10 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
 import { getClientById, updateClient } from '../../modules/clientManager';
+import PhoneInput from 'react-phone-number-input/input'
 
 const ClientEditForm = () => {
     const [editClient, setEditClient] = useState({});
+    const [phoneNum, setPhoneNum] = useState(editClient.phoneNumber);
     const [isLoading, setIsLoading] = useState(false);
+
 
     const { id } = useParams();
     const history = useHistory();
@@ -27,7 +30,7 @@ const ClientEditForm = () => {
         const editedClient = {
             id: id,
             companyName: editClient.companyName,
-            phoneNumber: editClient.phoneNumber,
+            phoneNumber: phoneNum,
             email: editClient.email,
         };
         updateClient(editedClient)
@@ -53,12 +56,14 @@ const ClientEditForm = () => {
                     value={editClient.companyName}
                     onChange={handleInputChange} />
             </FormGroup>
-            <FormGroup>
+            <PhoneInput country="US" placeholder="Phone Number" value={editClient.phoneNumber} onChange={setPhoneNum} maxLength='14' />
+            {/* <FormGroup>
                 <Label for="phoneNumber">Phone Number</Label>
                 <Input type="number" name="phoneNumber" id="phoneNumber" placeholder="Phone"
                     value={editClient.phoneNumber}
                     onChange={handleInputChange} />
-            </FormGroup>
+            </FormGroup> */}
+
             <FormGroup>
                 <Label for="email">Email</Label>
                 <Input type="text" name="email" id="email" placeholder="Email"

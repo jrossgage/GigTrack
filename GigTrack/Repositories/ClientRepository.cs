@@ -213,7 +213,7 @@ namespace GigTrack.Repositories
             {
                 Id = DbUtils.GetInt(reader, "ClientId"),
                 CompanyName = DbUtils.GetString(reader, "companyName"),
-                PhoneNumber = DbUtils.GetInt(reader, "phoneNumber"),
+                PhoneNumber = DbUtils.GetString(reader, "phoneNumber"),
                 Email = DbUtils.GetString(reader, "email"),
                 UserId = DbUtils.GetInt(reader, "userId"),
                 GigPay = new List<int>()
@@ -225,7 +225,7 @@ namespace GigTrack.Repositories
             {
                 Id = DbUtils.GetInt(reader, "ClientId"),
                 CompanyName = DbUtils.GetString(reader, "companyName"),
-                PhoneNumber = DbUtils.GetInt(reader, "phoneNumber"),
+                PhoneNumber = DbUtils.GetString(reader, "phoneNumber"),
                 Email = DbUtils.GetString(reader, "ClientEmail"),
                 UserId = DbUtils.GetInt(reader, "userId"),
 

@@ -5,13 +5,16 @@ import { useParams } from "react-router";
 import { Link } from "react-router-dom";
 import { getClientById } from "../../modules/clientManager";
 import { filterGigsByClientId } from "../../modules/gigManager";
-import Gig, { ClientGig } from "../Gig/Gig"
+import Gig, { ClientGig } from "../Gig/Gig";
+import { formatPhoneNumber } from 'react-phone-number-input';
 
 const ClientDetails = () => {
     const [client, setClient] = useState({});
     const [gigs, setGigs] = useState([]);
     const [showClientGigs, setShowClientGigs] = useState(false);
     const { id } = useParams();
+
+    const cutPhoneNumber = formatPhoneNumber(client.phoneNumber);
 
     const toggle = () => setShowClientGigs(!showClientGigs);
 
@@ -59,8 +62,8 @@ const ClientDetails = () => {
                 <CardBody>
                     <h4>{client.companyName}</h4>
                     <div>
-                        <p>{client.phoneNumber}</p>
-                        <p>{client.email}</p>
+                        <p><b><a href={`tel:${cutPhoneNumber}`}>{cutPhoneNumber}</a></b></p>
+                        <p><b><a href={`mailto:${client.email}`}>{client.email}</a></b></p>
                     </div>
                     <Link to={`/client`}>
                         <Button className="btn btn-primary">To Clients</Button>

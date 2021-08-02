@@ -307,7 +307,7 @@ namespace GigTrack.Repositories
                 {
                     Id = DbUtils.GetInt(reader, "ClientObjectId"),
                     CompanyName = DbUtils.GetString(reader, "companyName"),
-                    PhoneNumber = DbUtils.GetInt(reader, "PhoneNumber"),
+                    PhoneNumber = DbUtils.GetString(reader, "PhoneNumber"),
                     Email = DbUtils.GetString(reader, "email"),
                     UserId = DbUtils.GetInt(reader, "userId")
                 },
