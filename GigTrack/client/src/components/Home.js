@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from 'reactstrap';
+
+import MainChart from '../components/charts/MainChart'
 import { getAllGigs } from "../modules/gigManager";
 import { getAllExpense } from "../modules/expenseManager";
 import { getCurrentUser } from "../modules/authManager";
 
 export default function Home() {
 
+    const [gigArr, setGigArr] = useState([]);
+    const [expenseArr, setExpenseArr] = useState([]);
 
     const [totalPay, setTotalPay] = useState(0);
     const [totalExpense, setTotalExpense] = useState(0);
@@ -23,6 +27,7 @@ export default function Home() {
     const getGigPay = () => {
         getAllGigs().then(gigs => {
             getTotals(gigs);
+            setGigArr(gigs);
         })
     };
 
@@ -32,6 +37,7 @@ export default function Home() {
 
     const getExpensesPaid = () => {
         getAllExpense().then(expenses => {
+            setExpenseArr(expenses);
             getTotalExpense(expenses);
         })
     };
@@ -59,6 +65,8 @@ export default function Home() {
         }
         setTotalExpense(total);
     };
+
+
 
     useEffect(() => {
         getUser();
@@ -106,6 +114,15 @@ export default function Home() {
                     <button className="btn btn-primary">New Expense</button>
                 </Link>
             </div>
+            <div>
+                <div className="container">
+                    {gigArr &&
+                        <MainChart gigArr={gigArr} expenseArr={expenseArr} />
+                    }
+
+                </div>
+            </div>
+
 
         </>
     );
