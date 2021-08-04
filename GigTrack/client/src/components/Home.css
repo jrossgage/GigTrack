@@ -1,0 +1,24 @@
+.Column{
+padding-bottom: 15px;
+}
+.title{
+    text-align: center;
+    box-shadow: 4px 3px 8px 1px #969696;
+    width: 50%;
+    padding: 15px;
+    margin-top: 5px;
+}
+.box {
+    box-shadow: 4px 3px 8px 1px #969696;
+   padding: 4px;
+   width: 70%;
+   margin-top: 35px;
+}
+#net{
+    margin-top: 5px
+}
+
+#graph{
+    margin-top: 50px;
+   width: 100%;
+}

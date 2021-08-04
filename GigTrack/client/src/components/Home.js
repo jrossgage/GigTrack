@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from 'reactstrap';
+import { Button, Container, Col, Row, Label, Jumbotron, Card } from 'reactstrap';
 
 import MainChart from '../components/charts/MainChart'
 import { getAllGigs } from "../modules/gigManager";
 import { getAllExpense } from "../modules/expenseManager";
 import { getCurrentUser } from "../modules/authManager";
+import "./Home.css"
 
 export default function Home() {
 
@@ -75,55 +76,71 @@ export default function Home() {
     }, []);
 
     return (
-        <>
-            <div className='container'>
-                <div>
-                    <h2>{`Welcome, ${user.name}`}</h2>
+        <Container>
+
+
+            <Col className="Column m-auto">
+                <div className="title">
+                    <h3>{`Welcome, ${user.name}`}</h3>
                 </div>
-                <div>
-                    <h4>Total Income for the year:</h4>
-                    <p>{`$${totalPay}`}</p>
-                </div>
-                <div>
-                    <h4>Total Expense for the year:</h4>
-                    <p>{`$${totalExpense}`}</p>
-                </div>
-                <Button className="btn btn-primary" onClick={toggle}>{showNet ? 'Hide Net Income' : 'Show Net Income'}</Button>
-                {showNet &&
-                    <div>
-                        <h6>Net Income:</h6>
-                        <p>{`$${netIncome}`}</p>
+            </Col>
+
+
+            <Row>
+                <Col>
+                    <div className="box">
+                        <h4>Total Income for the year:</h4>
+                        <p style={{ color: "Green", fontSize: 25 }}><b>{`$${totalPay}`}</b></p>
                     </div>
-                }
-            </div>
-            <div className='container'>
-                <div>
-                    <h4>Mileage Tracker:</h4>
-                    <p>{`${totalMileage} miles`}</p>
-                </div>
+                    <div className="box">
+                        <h4>Total Expense for the year:</h4>
+                        <p style={{ color: "Red", fontSize: 25 }}><b>{`$${totalExpense}`}</b></p>
+                    </div>
 
-            </div>
-            <div>
-                <Link to="/gig/add">
-                    <button className="btn btn-primary">New Gig</button>
-                </Link>
-                <Link to="/client/add">
-                    <button className="btn btn-primary">New Client</button>
-                </Link>
-                <Link to="/expense/add">
-                    <button className="btn btn-primary">New Expense</button>
-                </Link>
-            </div>
-            <div>
-                <div className="container">
-                    {gigArr &&
-                        <MainChart gigArr={gigArr} expenseArr={expenseArr} />
-                    }
+                    <div className="box">
+                        <h4>Mileage Tracker:</h4>
+                        <p style={{ fontSize: 25 }}><b>{`${totalMileage} mi.`}</b></p>
+                    </div>
 
-                </div>
-            </div>
+                </Col>
 
 
-        </>
+                <Col>
+
+                    <div className="box" id="graph">
+                        {gigArr &&
+                            <MainChart gigArr={gigArr} expenseArr={expenseArr} />
+                        }
+
+                    </div>
+
+
+                    <div>
+                        <Link to="/gig/add">
+                            <Button className="m-1">New Gig</Button>
+                        </Link>
+                        <Link to="/client/add">
+                            <Button className="m-1">New Client</Button>
+                        </Link>
+                        <Link to="/expense/add">
+                            <Button className="m-1">New Expense</Button>
+                        </Link>
+                    </div>
+                    <div className="">
+                        <Button size="sm" color="info" onClick={toggle}>{showNet ? 'Hide Net Income' : 'Show Net Income'}</Button>
+                        {showNet &&
+                            <div className="box" id="net">
+                                <h6>Net Income:</h6>
+                                <p><b>{`$${netIncome}`}</b></p>
+                            </div>
+                        }
+                    </div>
+
+                </Col>
+
+            </Row>
+
+
+        </Container >
     );
 }

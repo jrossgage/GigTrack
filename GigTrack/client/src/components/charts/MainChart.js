@@ -50,9 +50,9 @@ const MainChart = ({ gigArr, expenseArr }) => {
         },
     };
     return (
-        <>
-            <Line data={data} options={options} />
-        </>
+
+        <Line data={data} options={options} />
+
     );
 }
 export default MainChart;
