@@ -2,13 +2,14 @@ import React from "react";
 import { Card, Cardbody, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import { dateFixer } from "../../modules/helper";
+import "./Gig.css";
 
 const Gig = ({ gig, deleteCurrentGig }) => {
 
     const cutDate = dateFixer(gig);
 
     return (
-        <Card >
+        <Card className="card">
             <div>
 
                 <p><b><Link to={`/gig/details/${gig.id}`}>{`${gig.venueName} with ${gig.client.companyName}`}</Link></b></p>

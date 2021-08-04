@@ -123,7 +123,9 @@ namespace GigTrack.Repositories
                 {
                     cmd.CommandText = @"
                             DELETE FROM Client
-                            WHERE Id = @id
+                            WHERE client.Id = @id
+                            DELETE FROM Gig
+                            WHERE gig.ClientId = @id
                         ";
 
                     DbUtils.AddParameter(cmd, "@id", id);
