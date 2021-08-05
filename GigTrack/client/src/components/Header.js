@@ -20,6 +20,8 @@ export default function Header({ isLoggedIn }) {
         <nav className={isOpen ? "sidebar active" : "sidebar"}>
             <button className="hamburger" type="button" onClick={toggle}>
                 <div></div>
+                <div></div>
+                <div></div>
             </button>
             <li><Link to="/">gig track.</Link></li>
             <ul onClick={toggle}>

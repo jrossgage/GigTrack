@@ -1,0 +1,32 @@
+.box_details{
+    box-shadow: 4px 3px 8px 1px #ffe8e8;
+    width: 70%;
+    margin: 15px 0px 0px 100px;
+    border-radius: 15px;
+}
+.box_details a{
+    color: #4F646F;
+}
+.box_details a:hover{
+    color: #253237;
+}
+.box_inner_notes{
+    box-shadow: 4px 3px 8px 1px #969696;
+    border-radius: 15px;
+    padding:5px;
+    margin-bottom: 5px;
+}
+.box_inner{
+    display: flex;
+    justify-content: space-evenly;
+    box-shadow: 4px 3px 8px 1px #969696;
+    border-radius: 15px;
+    padding:1px;
+    width: 25%;
+    margin-bottom: 5px;
+    background-color: #6D7E88;
+}
+.container_miles{
+    display:flex;
+    justify-content: center;
+}

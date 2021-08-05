@@ -1,12 +1,12 @@
-.list_gig {
+.list_expense {
     box-shadow: 4px 3px 8px 1px #969696;
    width: 70%;
    margin-top: 15px;
    border-radius: 15px;
 }
-.list_gig a{
+.list_expense a{
     color: #4F646F;
 }
-.list_gig a:hover{
+.list_expense a:hover{
     color: #253237;
 }

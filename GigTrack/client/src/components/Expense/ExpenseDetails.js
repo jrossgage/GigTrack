@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, ListGroupItem, ListGroup, Button } from "reactstrap";
+import { Card, CardBody, Container, ListGroupItem, Row, ListGroup, Button } from "reactstrap";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -22,21 +22,28 @@ const ExpenseDetails = () => {
     }, []);
 
     return (
-        <>
-            <h2 className="text-center">Expense Details </h2>
-            <Card className="w-75 mx-auto">
-                <CardBody>
-                    <h4>{expense.name}</h4>
-                    <div>
-                        <p>{`$${expense.cost}`}</p>
-                        <p>{`Date Purchased: ${cutDate}`}</p>
-                    </div>
-                    <Link to={`/expense`}>
-                        <Button className="btn btn-primary">To Expenses</Button>
-                    </Link>
-                </CardBody>
-            </Card >
-        </>
+        <Container>
+            <Row>
+                <div className="heading">
+                    <h1>expense details.</h1>
+                </div>
+            </Row>
+
+            <div className="box_details">
+                <Card>
+                    <CardBody>
+                        <h4>{expense.name}</h4>
+                        <div>
+                            <p><b>Cost </b></p><p style={{ color: "red" }}><b>{`$${expense.cost}`}</b></p>
+                            <p>{`Date Purchased: ${cutDate}`}</p>
+                        </div>
+                        <Link to={`/expense`}>
+                            <Button className="btn btn-primary">To Expenses</Button>
+                        </Link>
+                    </CardBody>
+                </Card >
+            </div>
+        </Container>
     )
 }
 export default ExpenseDetails;
