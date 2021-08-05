@@ -1,0 +1,22 @@
+.heading{
+    margin-left: 15px;
+  
+}
+.info_box{
+    width: 60%;
+   
+}
+.info_display{
+    box-shadow: 4px 3px 8px 1px #969696;
+  padding: 15px;
+    margin-top: 25%;
+    border-radius: 15px;
+}
+.form{
+    box-shadow: 4px 3px 8px 1px #969696;
+    padding: 15px;
+      margin-top: 15%;
+      border-radius: 15px;
+    background-color: #fff;
+    width: 60%;
+}

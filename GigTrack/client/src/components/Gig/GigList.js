@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container, Col, Row } from 'reactstrap';
 import { getAllGigs, deleteGig, filterGigsByClientId, filterGigsByLocationId, filterGigsByVenueName } from "../../modules/gigManager";
 import { Link, useHistory } from "react-router-dom";
 import Gig from "./Gig";
 import { getAllLocations } from "../../modules/locationManager";
 import { getAllClients } from "../../modules/clientManager";
+import "./GigList.css"
 
 const GigList = () => {
 
@@ -113,68 +114,83 @@ const GigList = () => {
     }, [dropDownSelection]);
 
     return (
-        <>
-            <div className='container'>
-                <div>
-                    <h4>Total Income for the year:</h4>
-                    <p>{`$${totalPay}`}</p>
+        <Container>
+            <Row>
+                <div className="heading">
+                    <h1>gigs.</h1>
                 </div>
+            </Row>
 
-                <Form>
-                    <FormGroup>
-                        <select onChange={handleMainDropMenu}>
-                            <option value="0">Filter by:</option>
-                            <option value="1">Venue</option>
-                            <option value="2">Clients</option>
-                            <option value="3">Locations</option>
-                        </select>
-                    </FormGroup>
-                    {dropDownSelection === '1' &&
-                        <FormGroup>
-                            <Label for="Venue">Venue</Label>
-                            <select name="venues" id="venues" onChange={handleDropDownChange} className='form-control'>
-                                <option value="0">Venue</option>
-                                {venues.map(v => (
-                                    <option key={v} value={v}>{v}</option>
-                                ))}
-                            </select>
-                        </FormGroup>
-                    }
-                    {dropDownSelection === '2' &&
-                        <FormGroup>
-                            <select name="clients" id="clients" onChange={handleDropDownChange} className='form-control'>
-                                <option value="0">Client</option>
-                                {clients.map(c => (
-                                    <option key={c.id} value={c.id}>{c.companyName}</option>
-                                ))}
-                            </select>
-                        </FormGroup>}
-                    {dropDownSelection === '3' &&
-                        <FormGroup>
-                            <select name="locations" id="locations" onChange={handleDropDownChange} className='form-control'>
-                                <option value="0">Location</option>
-                                {locations.map(l => (
-                                    <option key={l.id} value={l.id}>{`${l.city}, ${l.state}`}</option>
-                                ))}
-                            </select>
-                        </FormGroup>}
-                </Form>
-                <div className="container">
 
-                    <Link to="/gig/add">
-                        <button className="btn btn-primary">New Gig</button>
-                    </Link>
+            <Row>
+                <Col>
+                    <div className="form">
+                        <Form>
+                            <FormGroup style={{ padding: 15 }}>
+                                <select onChange={handleMainDropMenu}>
+                                    <option value="0">Filter by:</option>
+                                    <option value="1">Venue</option>
+                                    <option value="2">Clients</option>
+                                    <option value="3">Locations</option>
+                                </select>
+                            </FormGroup>
+                            {dropDownSelection === '1' &&
+                                <FormGroup>
+                                    <Label for="Venue">Venue</Label>
+                                    <select name="venues" id="venues" onChange={handleDropDownChange} className='form-control'>
+                                        <option value="0">Venue</option>
+                                        {venues.map(v => (
+                                            <option key={v} value={v}>{v}</option>
+                                        ))}
+                                    </select>
+                                </FormGroup>
+                            }
+                            {dropDownSelection === '2' &&
+                                <FormGroup>
+                                    <select name="clients" id="clients" onChange={handleDropDownChange} className='form-control'>
+                                        <option value="0">Client</option>
+                                        {clients.map(c => (
+                                            <option key={c.id} value={c.id}>{c.companyName}</option>
+                                        ))}
+                                    </select>
+                                </FormGroup>}
+                            {dropDownSelection === '3' &&
+                                <FormGroup>
+                                    <select name="locations" id="locations" onChange={handleDropDownChange} className='form-control'>
+                                        <option value="0">Location</option>
+                                        {locations.map(l => (
+                                            <option key={l.id} value={l.id}>{`${l.city}, ${l.state}`}</option>
+                                        ))}
+                                    </select>
+                                </FormGroup>}
+                        </Form>
 
-                </div>
-            </div>
-            <div className="container">
-                <div>
+                        <div className="container">
+                            <Link to="/gig/add">
+                                <Button className="btn btn-primary">New Gig</Button>
+                            </Link>
+                        </div>
+
+                    </div>
+                    <div className="info_box">
+                        <div className="info_display">
+                            <h4>Total Income for the year:</h4>
+                            <p style={{ color: "Green", fontSize: 25 }}><b>{`$${totalPay}`}</b></p>
+                        </div>
+                    </div>
+                </Col>
+
+                <Col>
                     {gigs?.map((gig) => (
                         <Gig gig={gig} key={gig.id} deleteCurrentGig={deleteCurrentGig} />
                     ))}
-                </div>
-            </div>
-        </>
+                </Col>
+
+
+
+
+            </Row>
+        </Container >
     )
 };
 export default GigList;

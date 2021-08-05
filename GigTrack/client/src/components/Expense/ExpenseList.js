@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Row, Col, Form, FormGroup, Label, Input, Container } from 'reactstrap';
 import { getAllExpense, deleteExpense, searchExpenses } from '../../modules/expenseManager';
 import { Link, useHistory } from "react-router-dom";
 import Expense from "../Expense/Expense"
+import "./ExpenseList.css"
 
 const ExpenseList = () => {
 
@@ -49,31 +50,42 @@ const ExpenseList = () => {
 
 
     return (
-        <>
-            <div className='container'>
-                <div>
-                    <h4>Total Expenses for the year:</h4>
-                    <p>{`$${totalExpense}`}</p>
+        <Container>
+            <Row>
+                <div className="heading">
+                    <h1>expenses.</h1>
                 </div>
-                <div className="container">
-                    <div >
-                        <input type='text' className="search" required onChange={handleSearch} id="search_box" placeholder="Search By Name" />
+            </Row>
+            <Row>
+                <Col>
+                    <div className="form">
+                        <div className="info_box">
+                            <input type='text' className="search" required onChange={handleSearch} id="search_box" placeholder="Search By Name" />
+                        </div>
+
+                        <Link to="/expense/add">
+                            <Button>New Expense</Button>
+                        </Link>
+                    </div>
+                    <div className="info_box">
+                        <div className="info_display">
+                            <h4>Total Expenses for the year:</h4>
+                            <p style={{ color: "Green", fontSize: 25 }}><b>{`$${totalExpense}`}</b></p>
+
+                        </div>
                     </div>
 
-                    <Link to="/expense/add">
-                        <button className="btn btn-primary">New Expense</button>
-                    </Link>
+                </Col>
 
-                </div>
-            </div>
-            <div className="container">
-                <div>
+                <Col>
+
                     {expenses.map((expense) => (
                         <Expense expense={expense} key={expense.id} deleteCurrentExpense={deleteCurrentExpense} />
                     ))}
-                </div>
-            </div>
-        </>
+                </Col>
+
+            </Row>
+        </Container >
     )
 };
 export default ExpenseList;

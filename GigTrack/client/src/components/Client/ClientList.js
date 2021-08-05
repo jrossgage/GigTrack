@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Button, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Button, Form, FormGroup, Label, Input, Container, Col, Row } from 'reactstrap';
 import { getAllClients, deleteClient, searchClients } from '../../modules/clientManager';
 import { Link } from "react-router-dom";
 import Client from "../Client/Client";
-
+import "./ClientList.css";
 
 const ClientList = () => {
 
@@ -74,29 +74,34 @@ const ClientList = () => {
 
 
     return (
-        <>
-            <div className="container">
-                <div >
-                    <input type='text' className="search" required onChange={handleSearch} id="search_box" placeholder="Search By Name" />
+        <Container>
+            <Row>
+                <div className="heading">
+                    <h1>clients.</h1>
                 </div>
+            </Row>
+            <Row>
+                <Col>
+                    <div className="form">
+                        <div className="info_box" >
+                            <input type='text' className="search" required onChange={handleSearch} id="search_box" placeholder="Search By Name" />
+                        </div>
 
-                <Button className="btn btn-primary" onClick={toggle}>Show{filterClientPay ? ' All' : ' Only 1099'}</Button>
+                        <Button color="info" size="m" onClick={toggle}>Show{filterClientPay ? ' All' : ' 1099'}</Button>
 
-                <Link to="/client/add">
-                    <button className="btn btn-primary">New Client</button>
-                </Link>
+                        <Link to="/client/add">
+                            <Button>New Client</Button>
+                        </Link>
 
-            </div>
-            <div>
-                <div className="container">
-                    <div>
-                        {clients.map((client) => (
-                            <Client client={client} key={client.id} deleteCurrentClient={deleteCurrentClient} />
-                        ))}
                     </div>
-                </div>
-            </div>
-        </>
+                </Col>
+                <Col>
+                    {clients.map((client) => (
+                        <Client client={client} key={client.id} deleteCurrentClient={deleteCurrentClient} />
+                    ))}
+                </Col>
+            </Row>
+        </Container>
     )
 };
 export default ClientList;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, Cardbody, Button } from "reactstrap";
+import { Card, Button, CardBody, CardTitle, CardSubtitle, CardText } from "reactstrap";
 import { Link } from "react-router-dom";
 import { dateFixer } from "../../modules/helper";
 import "./Gig.css";
@@ -9,44 +9,48 @@ const Gig = ({ gig, deleteCurrentGig }) => {
     const cutDate = dateFixer(gig);
 
     return (
-        <Card className="card">
-            <div>
+        <div className="list_gig">
+            <Card>
+                <CardBody>
+                    <CardTitle tag="h5"><Link to={`/gig/details/${gig.id}`}>{`${gig.venueName}`}<br></br> {`with ${gig.client.companyName}`}</Link></CardTitle>
 
-                <p><b><Link to={`/gig/details/${gig.id}`}>{`${gig.venueName} with ${gig.client.companyName}`}</Link></b></p>
 
+                    <CardSubtitle><b>{`${gig.location.city}, ${gig.location.state}`}</b></CardSubtitle>
 
-                <p><b>{`${gig.location.city}, ${gig.location.state}`}</b></p>
+                    <p><b>{`On ${cutDate}`}</b></p>
+                    <CardText><b>{`Pay: $${gig.pay}`}</b></CardText>
 
-                <p><b>{`On ${cutDate}`}</b></p>
-                <p>{`Pay: $${gig.pay}`}</p>
+                    <div>
+                        <button className="btn btn-danger" onClick={() => deleteCurrentGig(gig.id)}>Delete</button>
+                        <Link to={`/gig/edit/${gig.id}`}>
+                            <button className="btn btn-light  m-1">Edit</button>
+                        </Link>
+                    </div>
+                </CardBody>
 
-                <div>
-                    <button className="btn btn-danger" onClick={() => deleteCurrentGig(gig.id)}>Delete</button>
-                    <Link to={`/gig/edit/${gig.id}`}>
-                        <button className="btn btn-light  m-2">Edit</button>
-                    </Link>
-                </div>
+            </Card>
+        </div>
 
-            </div>
-        </Card>
     )
 }
 export const ClientGig = ({ gig }) => {
 
     const cutDate = dateFixer(gig);
     return (
-        <Card >
-            <div>
+        <div className="list_gig">
+            <Card>
+                <CardBody>
+                    <CardTitle tag="h5"><Link to={`/gig/details/${gig.id}`}>{`${gig.venueName}`}</Link></CardTitle>
 
-                <p><b><Link to={`/gig/details/${gig.id}`}>{gig.venueName}</Link></b></p>
 
+                    <CardSubtitle><b>{`${gig.location.city}, ${gig.location.state}`}</b></CardSubtitle>
 
-                <p><b>{`In ${gig.location.city}, ${gig.location.state}`}</b></p>
+                    <p><b>{`On ${cutDate}`}</b></p>
 
-                <p><b>{cutDate}</b></p>
+                </CardBody>
 
-            </div>
-        </Card>
+            </Card>
+        </div>
     )
 }
 export default Gig;

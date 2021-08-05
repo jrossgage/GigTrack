@@ -21,12 +21,10 @@ function App() {
 
   return (
     <Router>
-      <Container className="mr-5">
-        <Header position="absolute" isLoggedIn={isLoggedIn} />
-      </Container>
-      <Container>
-        <ApplicationViews isLoggedIn={isLoggedIn} />
-      </Container>
+
+      <Header isLoggedIn={isLoggedIn} />
+      <ApplicationViews isLoggedIn={isLoggedIn} />
+
     </Router>
   );
 }

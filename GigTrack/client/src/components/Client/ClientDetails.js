@@ -1,5 +1,5 @@
 import React from "react";
-import { Card, CardBody, ListGroupItem, ListGroup, Button } from "reactstrap";
+import { Card, CardBody, ListGroupItem, ListGroup, Button, Container, Row } from "reactstrap";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router";
 import { Link } from "react-router-dom";
@@ -32,19 +32,17 @@ const ClientDetails = () => {
     const gigClientDisplay = () => {
         if (gigs.length < 1) {
             return (
-                <div className="container">
-                    <h4>You have no gigs with this client</h4>
+                <div>
+                    <h6>You have no gigs with this client</h6>
                 </div>
             )
         } else {
 
             return (
-                <div className="container">
-                    <div>
-                        {gigs?.map((gig) => (
-                            <ClientGig gig={gig} key={gig.id} />
-                        ))}
-                    </div>
+                <div>
+                    {gigs?.map((gig) => (
+                        <ClientGig gig={gig} key={gig.id} />
+                    ))}
                 </div>
             )
         }
@@ -56,28 +54,35 @@ const ClientDetails = () => {
     }, []);
 
     return (
-        <>
-            <h2 className="text-center">Details </h2>
-            <Card className="w-75 mx-auto">
-                <CardBody>
-                    <h4>{client.companyName}</h4>
-                    <div>
-                        <p><b><a href={`tel:${cutPhoneNumber}`}>{cutPhoneNumber}</a></b></p>
-                        <p><b><a href={`mailto:${client.email}`}>{client.email}</a></b></p>
-                    </div>
-                    <Link to={`/client`}>
-                        <Button className="btn btn-primary">To Clients</Button>
-                    </Link>
+        <Container>
+            <Row>
+                <div className="heading">
+                    <h1>client details.</h1>
+                </div>
+            </Row>
+
+            <div className="box_details">
+                <Card>
+                    <CardBody>
+                        <h4>{client.companyName}</h4>
+                        <div>
+                            <p><b><a href={`tel:${cutPhoneNumber}`}>{cutPhoneNumber}</a></b></p>
+                            <p><b><a href={`mailto:${client.email}`}>{client.email}</a></b></p>
+                        </div>
+                        <Link to={`/client`}>
+                            <Button className="btn btn-primary">To Clients</Button>
+                        </Link>
 
 
-                    <Button className="btn btn-primary" onClick={toggle}>{showClientGigs ? 'Hide' : 'See'} All Gigs from Client</Button>
+                        <Button color="info" onClick={toggle}>{showClientGigs ? 'Hide' : 'See'} All Gigs from Client</Button>
 
-                    {showClientGigs && gigClientDisplay()}
+                        {showClientGigs && gigClientDisplay()}
 
 
-                </CardBody>
-            </Card >
-        </>
+                    </CardBody>
+                </Card >
+            </div>
+        </Container>
     )
 }
 export default ClientDetails;
