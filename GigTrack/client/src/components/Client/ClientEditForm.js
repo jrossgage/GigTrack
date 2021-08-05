@@ -6,7 +6,7 @@ import PhoneInput from 'react-phone-number-input/input'
 
 const ClientEditForm = () => {
     const [editClient, setEditClient] = useState({});
-    const [phoneNum, setPhoneNum] = useState(editClient.phoneNumber);
+    const [phoneNum, setPhoneNum] = useState("");
     const [isLoading, setIsLoading] = useState(false);
 
 
@@ -43,7 +43,8 @@ const ClientEditForm = () => {
         getClientById(id)
             .then(c => {
                 setEditClient(c);
-                setIsLoading(false)
+                setPhoneNum(c.phoneNumber);
+                setIsLoading(false);
             });
     }, [id])
 

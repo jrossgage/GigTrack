@@ -46,7 +46,7 @@ const GigDetails = () => {
                         <div className="container_miles">
                             <div className="box_inner">
                                 <p style={{ color: "white" }}><b>{gig.mileage} miles</b></p>
-                                <p style={{ color: "white" }}><b>Pay: </b></p><p style={{ color: "Green", fontSize: 20 }}><b>{`$${gig.pay}`}</b></p>
+                                <p style={{ color: "white" }}><b>Pay: {`$${gig.pay}`}</b></p>
                             </div>
                         </div>
 

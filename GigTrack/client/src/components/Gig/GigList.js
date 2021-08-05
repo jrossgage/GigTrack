@@ -69,7 +69,7 @@ const GigList = () => {
         console.log("Main drop down Id", id)
 
         setDropDownSelection(id);
-        if (id === 0) {
+        if (id === "0") {
             getGigs();
         }
     };
@@ -79,22 +79,22 @@ const GigList = () => {
         const menuName = e.target.name;
         const id = e.target.value;
 
-        if (id === 0) {
+        if (id === "0") {
             getGigs();
         }
-        if (menuName === 'clients') {
+        else if (menuName === 'clients') {
             filterGigsByClientId(id)
                 .then(g => {
                     setGigs(g);
                 })
         }
-        if (menuName === 'locations') {
+        else if (menuName === 'locations') {
             filterGigsByLocationId(id)
                 .then(g => {
                     setGigs(g);
                 })
         }
-        if (menuName === 'venues') {
+        else if (menuName === 'venues') {
             filterGigsByVenueName(id)
                 .then(g => {
                     setGigs(g);
