@@ -7,7 +7,7 @@ import { addClient } from '../../modules/clientManager';
 const ClientAddForm = () => {
     const emptyclient = {
         companyName: "",
-        phoneNumber: 0,
+        phoneNumber: '0',
         email: ""
     };
 
@@ -25,18 +25,18 @@ const ClientAddForm = () => {
         clientCopy[key] = value;
         clientCopy.phoneNumber = phoneNum;
         setNewClient(clientCopy);
-        console.log("The Client", clientCopy)
     };
 
     const handleSave = (e) => {
         e.preventDefault();
 
-        if (newClient.name === "" || newClient.phoneNumber === 0 || newClient.email === 0) {
+
+        if (newClient.companyName === "" || newClient.phoneNumber === '0' || newClient.email === 0) {
             window.alert(`Please input more information`)
 
             setNewClient({
-                name: "",
-                phoneNumber: 0,
+                companyName: "",
+                phoneNumber: "",
                 email: 0
             })
             return history.push('/client/add');

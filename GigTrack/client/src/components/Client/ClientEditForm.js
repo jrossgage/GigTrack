@@ -33,6 +33,7 @@ const ClientEditForm = () => {
             phoneNumber: phoneNum,
             email: editClient.email,
         };
+
         updateClient(editedClient)
             .then((c) => {
                 history.push(`/client/details/${editedClient.id}`);
