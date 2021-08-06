@@ -54,20 +54,13 @@ const ClientAddForm = () => {
             <FormGroup>
                 <Label for="companyName">Name</Label>
                 <Input type="text" name="name" id="companyName" placeholder="Name"
-                    // value={newClient.name}
                     onChange={handleInputChange} />
             </FormGroup>
             <PhoneInput country="US" placeholder="Phone Number" value={phoneNum} onChange={setPhoneNum} maxLength='14' />
-            {/* <FormGroup>
-                <Label for="phoneNumber">Phone Number</Label>
-                <Input type="number" name="phoneNumber" id="phoneNumber" placeholder="Phone Number"
-                    // value={newClient.phoneNumber}
-                    onChange={handleInputChange} />
-            </FormGroup> */}
             <FormGroup>
                 <Label for="email">Email</Label>
                 <Input type="text" name="email" id="email" placeholder="Email"
-                    // value={newClient.email}
+
                     onChange={handleInputChange} />
             </FormGroup>
 

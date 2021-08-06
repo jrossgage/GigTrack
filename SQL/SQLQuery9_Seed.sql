@@ -2,7 +2,7 @@
 GO
 
 set identity_insert [UserProfile] on
-insert into UserProfile (Id, FirebaseUserId, [Name], Email) VALUES (1,'1','Frank Bill', 'frank@bar.com');
+insert into UserProfile (Id, FirebaseUserId, [Name], Email) VALUES (1,'1','Frank', 'frank@bar.com');
 insert into UserProfile (Id, FirebaseUserId, [Name], Email) VALUES (2,'2','Sally Sandwich', 'sally@bar.com');
 insert into UserProfile (Id, FirebaseUserId, [Name], Email) VALUES (3,'3','Ed Edds', 'ed@bar.com');
 set identity_insert [UserProfile] off 
@@ -15,9 +15,9 @@ insert into Gig (Id, [pay], [date], mileage, clientId, venueName, locationId, no
 set identity_insert [Gig] off
 
 set identity_insert [Client] on
-insert into Client (Id, companyName, phoneNumber, email, userId) VALUES (1, 'The Wedding Band', 555-258-8888, 'wedding@bar.com', 1);
-insert into Client (Id, companyName, phoneNumber, email, userId) VALUES (2, 'Country Artist', 555-333-9999, 'country@bar.com', 2);
-insert into Client (Id, companyName, phoneNumber, email, userId) VALUES (3, 'Corporate Band', 555-456-7891, 'corporate@bar.com', 3);
+insert into Client (Id, companyName, phoneNumber, email, userId) VALUES (1, 'The Wedding Band', '+16549874122', 'wedding@bar.com', 1);
+insert into Client (Id, companyName, phoneNumber, email, userId) VALUES (2, 'Country Artist', '+19874562132', 'country@bar.com', 2);
+insert into Client (Id, companyName, phoneNumber, email, userId) VALUES (3, 'Corporate Band', '+17896451321', 'corporate@bar.com', 3);
 set identity_insert [Client] off
 
 set identity_insert [Location] on

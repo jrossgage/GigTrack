@@ -1,0 +1,6 @@
+.register_box{
+    box-shadow: 4px 3px 8px 1px #ffe8e8;
+    width: 70%;
+    margin: 15px 0px 0px 100px;
+    border-radius: 15px;
+}
