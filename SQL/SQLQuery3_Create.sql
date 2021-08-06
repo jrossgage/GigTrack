@@ -25,7 +25,7 @@ GO
 CREATE TABLE [Client] (
   [Id] int PRIMARY KEY IDENTITY NOT NULL,
   [CompanyName] nvarchar(255) NOT NULL,
-  [PhoneNumber] int NOT NULL,
+  [PhoneNumber] nvarchar(14) NOT NULL,
   [Email] nvarchar(255) NOT NULL,
   [UserId] int NOT NULL
 )

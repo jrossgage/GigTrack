@@ -35,7 +35,6 @@ const ClientList = () => {
             })
         }
         else if (filterClientPay && search == '') {
-            // filterClientsByPay(clients);
             getAllClients().then(c => {
                 filterClientsByPay(c);
             })

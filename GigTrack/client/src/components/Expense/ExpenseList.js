@@ -70,7 +70,7 @@ const ExpenseList = () => {
                     <div className="info_box">
                         <div className="info_display">
                             <h4>Total Expenses for the year:</h4>
-                            <p style={{ color: "Green", fontSize: 25 }}><b>{`$${totalExpense}`}</b></p>
+                            <p style={{ color: "Red", fontSize: 25 }}><b>{`$${totalExpense}`}</b></p>
 
                         </div>
                     </div>
