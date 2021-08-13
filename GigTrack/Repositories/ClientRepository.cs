@@ -13,10 +13,10 @@ namespace GigTrack.Repositories
     {
         public ClientRepository(IConfiguration config) : base(config) { }
 
+        //Returns a list of clients specific to the logged in User
         public List<ClientViewModel> GetAllClientsByFirebaseId(string firebaseUserId)
         {
-            //TODO: I need a list of ints of the gig pay associated with each client to be able to do some logic to
-            //determine if a client has paid the user $600 or more.
+            
             using (var conn = Connection)
             {
                 conn.Open();
@@ -58,7 +58,7 @@ namespace GigTrack.Repositories
                 }
             }
         }
-
+        //Returns a single client specific to the logged in User
         public Client GetClientById(int id, string firebaseUserId)
         {
             using (var conn = Connection)
@@ -90,7 +90,7 @@ namespace GigTrack.Repositories
                 }
             }
         }
-
+        //Adds a client to the Database
         public void Add(Client client)
         {
             using (var conn = Connection)
@@ -163,9 +163,12 @@ namespace GigTrack.Repositories
                 }
             }
         }
-
+        //The method utilized for the search bar within the Client List
         public List<ClientViewModel> Search(string criterion, string firebaseUserId)
         {
+            //accepts two strings to return a list of ClientViewModels specific to the logged in user
+            //When using the ClientViewModel, data from the Client and Gig table must be pulled.
+            //The clients are searched by the company Name
             using (var conn = Connection)
             {
                 conn.Open();
@@ -187,16 +190,18 @@ namespace GigTrack.Repositories
                     var reader = cmd.ExecuteReader();
 
                     var clients = new List<ClientViewModel>();
+                    //As the reader reads over the returned data, the client id of the current data object is stored.
+                    //Then, the List clients is checked over to return the first object mataching that client ID
                     while (reader.Read())
                     {
                         var clientId = DbUtils.GetInt(reader, "ClientId");
-                        var existingClient = clients.FirstOrDefault(c => c.Id == clientId);
-                        if (existingClient == null)
+                        var existingClient = clients.FirstOrDefault(c => c.Id == clientId); //checks to see if the client has already been added to the List, "Clients"
+                        if (existingClient == null) //if the client does not exist in clients
                         {
-                            existingClient = NewClientVMFromReader(reader);
-                            clients.Add(existingClient);
+                            existingClient = NewClientVMFromReader(reader); //generate new clientVM with the returned data
+                            clients.Add(existingClient); //add it to the list
                         }
-                        if (DbUtils.IsNotDbNull(reader, "pay"))
+                        if (DbUtils.IsNotDbNull(reader, "pay")) //if the client has gigs associated with it, store that pay int into the GigPay list on the client View Model.
                         {
                             existingClient.GigPay.Add(DbUtils.GetInt(reader, "pay"));
                         }

@@ -11,16 +11,25 @@ const Client = ({ client, deleteCurrentClient }) => {
         <div className="list_client">
             <Card>
                 <CardBody>
+                    <div className="cardTitle">
+                        <div>
 
-                    <Link to={`/client/details/${client.id}`}>
-                        <CardTitle tag="h5" >
-                            {client.companyName}
-                        </CardTitle>
-                    </Link>
+                            <Link to={`/client/details/${client.id}`}>
+                                <CardTitle tag="h5" >
+                                    {client.companyName}
+                                </CardTitle>
+                            </Link>
 
-                    <CardSubtitle><b><a href={`tel:${cutPhoneNumber}`}>{cutPhoneNumber}</a></b></CardSubtitle>
+                            <CardSubtitle><b><a href={`tel:${cutPhoneNumber}`}>{cutPhoneNumber}</a></b></CardSubtitle>
 
-                    <p><b><a href={`mailto:${client.email}`}>{client.email}</a></b></p>
+                            <p><b><a href={`mailto:${client.email}`}>{client.email}</a></b></p>
+
+                        </div>
+                        <div>
+                            <CardTitle>Total Paid:</CardTitle>
+                            <p style={{ color: "Green" }}><b>{`$${client.paySum}`}</b></p>
+                        </div>
+                    </div>
 
                     <div>
                         <button className="btn btn-danger" onClick={() => deleteCurrentClient(client.id)}>Delete</button>
@@ -29,9 +38,10 @@ const Client = ({ client, deleteCurrentClient }) => {
                         </Link>
                     </div>
 
+
                 </CardBody>
             </Card>
-        </div>
+        </div >
     )
 }
 export default Client;
