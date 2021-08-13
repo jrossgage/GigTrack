@@ -19,6 +19,7 @@ const Gig = ({ gig, deleteCurrentGig }) => {
 
                     <p><b>{`On ${cutDate}`}</b></p>
                     <CardText><b>Pay:</b></CardText>
+                    <p style={{ color: "green", fontSize: 18 }}><b>{`$${gig.pay}`}</b></p>
 
                     <div>
                         <button className="btn btn-danger" onClick={() => deleteCurrentGig(gig.id)}>Delete</button>

@@ -20,7 +20,8 @@ const Expense = ({ expense, deleteCurrentExpense }) => {
 
                     <CardSubtitle><b>{`On ${cutDate}`}</b></CardSubtitle>
 
-                    <CardSubtitle><b>{`Cost: $${expense.cost}`}</b></CardSubtitle>
+                    <p><b>Cost:</b></p>
+                    <p style={{ color: "red", fontSize: 18 }}><b>{`$${expense.cost}`}</b></p>
 
 
                     <div>
