@@ -174,6 +174,7 @@ namespace GigTrack.Repositories
             }
         }
 
+        //Gig List Filter Functions ------
         public List<Gig> FilterAllGigsByLocationId(int locationId, string firebaseUserId)
         {
             using (var conn = Connection)
@@ -293,7 +294,7 @@ namespace GigTrack.Repositories
                 }
             }
         }
-
+        //---------
         private Gig NewGigFromReader(SqlDataReader reader)
         {
             return new Gig()
