@@ -10,3 +10,7 @@
 .list_client a:hover{
     color: #253237;
 }
+.cardTitle{
+    display: flex;
+    justify-content: space-between;
+}

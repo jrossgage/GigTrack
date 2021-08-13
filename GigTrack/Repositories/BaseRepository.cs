@@ -6,7 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace GigTrack.Repositories
-{
+{   //sets up the connection string which will be used within all repositories
     public abstract class BaseRepository
     {
         private readonly string _connectionString;
